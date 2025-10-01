@@ -43,8 +43,8 @@ const Footer: React.FC = () => {
 
   const contactInfo = [
     { icon: Mail, text: 'hello@ecozerocertify.com' },
-    { icon: Phone, text: '+1 (555) 012-3456' },
-    { icon: MapPin, text: 'San Francisco, CA' }
+    { icon: Phone, text: '+91 9876543210' },
+    { icon: MapPin, text: 'Banglore, India' }
   ];
 
   return (
