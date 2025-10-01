@@ -1,0 +1,165 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Award, Globe, CheckCircle, TrendingUp, Shield } from 'lucide-react';
+
+const FeatureShowcase: React.FC = () => {
+  const features = [
+    {
+      id: 'incremental',
+      title: 'Celebrate Progress at Every Milestone',
+      description: 'Receive tangible certificates throughout your journey - from initial assessment to carbon offset purchases to final certification. Demonstrate progress to stakeholders with multiple recognition benchmarks.',
+      icon: Award,
+      image: '🌱',
+      points: [
+        'Assessment Certificate',
+        'Net Zero Plan Certificate',
+        'Progress Milestones',
+        'Final Certification'
+      ],
+      bgColor: 'bg-gradient-to-br from-green-50 to-emerald-50',
+      iconColor: 'text-green-600',
+      iconBg: 'bg-green-100'
+    },
+    {
+      id: 'framework',
+      title: 'Built on Global Standards',
+      description: 'Based on the GHG Protocol and aligned with the Indian Agreement. Our rating system agnostic approach gives you flexibility to use your preferred framework while achieving recognized certification.',
+      icon: Globe,
+      image: '🌍',
+      points: [
+        'GHG Protocol Based',
+        'Indian Agreement Aligned',
+        'Framework Flexible',
+        'Globally Recognized'
+      ],
+      bgColor: 'bg-gradient-to-br from-blue-50 to-cyan-50',
+      iconColor: 'text-blue-600',
+      iconBg: 'bg-blue-100'
+    }
+  ];
+
+  return (
+    <section className="bg-white section-padding">
+      <div className="container-custom">
+        {features.map((feature, index) => (
+          <motion.div
+            key={feature.id}
+            className={`mb-24 last:mb-0 ${feature.bgColor} rounded-3xl p-8 lg:p-12`}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className={`grid lg:grid-cols-2 gap-12 items-center ${
+              index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
+            }`}>
+              {/* Content */}
+              <motion.div
+                className={`space-y-6 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                <div className="flex items-center space-x-3">
+                  <div className={`p-3 rounded-xl ${feature.iconBg}`}>
+                    <feature.icon className={`h-6 w-6 ${feature.iconColor}`} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
+                    Key Feature
+                  </span>
+                </div>
+
+                <h3 className="text-3xl sm:text-4xl font-heading font-bold text-neutral-charcoal">
+                  {feature.title}
+                </h3>
+
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  {feature.description}
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {feature.points.map((point, pointIndex) => (
+                    <motion.div
+                      key={point}
+                      className="flex items-center space-x-3"
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5, delay: 0.4 + pointIndex * 0.1 }}
+                      viewport={{ once: true }}
+                    >
+                      <CheckCircle className="h-5 w-5 text-primary-emerald flex-shrink-0" />
+                      <span className="font-medium text-neutral-charcoal">{point}</span>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <motion.button
+                  className="btn-primary mt-6"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Learn More
+                </motion.button>
+              </motion.div>
+
+              {/* Visual */}
+              <motion.div
+                className={`${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}
+                initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                <div className="relative">
+                  {/* Main Visual */}
+                  <div className="bg-white rounded-2xl p-8 shadow-xl">
+                    <div className="text-center">
+                      <div className="text-8xl mb-6">{feature.image}</div>
+                      <div className="space-y-4">
+                        <div className="h-4 bg-gradient-to-r from-primary-emerald to-accent-gold rounded-full" />
+                        <div className="h-4 bg-gradient-to-r from-accent-gold to-primary-emerald rounded-full" />
+                        <div className="h-4 bg-gradient-to-r from-primary-emerald to-accent-gold rounded-full" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Floating Elements */}
+                  <motion.div
+                    className="absolute -top-4 -right-4 bg-white rounded-xl shadow-lg p-4"
+                    initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+                    whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                    transition={{ duration: 0.6, delay: 0.8 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.05, rotate: 5 }}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <TrendingUp className="h-5 w-5 text-green-600" />
+                      <span className="font-semibold text-sm">Progress Tracking</span>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg p-4"
+                    initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
+                    whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                    transition={{ duration: 0.6, delay: 1 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.05, rotate: -5 }}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <Shield className="h-5 w-5 text-blue-600" />
+                      <span className="font-semibold text-sm">Secure Platform</span>
+                    </div>
+                  </motion.div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default FeatureShowcase;

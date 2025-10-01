@@ -1,25 +1,98 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+
+// Pages
+import LandingPage from './pages/LandingPage';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import DashboardSelection from './pages/DashboardSelection';
+
+// Components
+import ProtectedRoute from './components/common/ProtectedRoute';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <AuthProvider>
+        <div className="App">
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            
+            {/* Protected Customer Routes */}
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <DashboardSelection />
+                </ProtectedRoute>
+              }
+            />
+            
+            <Route
+              path="/certification/questionnaire"
+              element={
+                <ProtectedRoute>
+                  <div className="min-h-screen bg-slate-100 flex items-center justify-center">
+                    <div className="text-center">
+                      <h1 className="text-3xl font-bold text-slate-900 mb-4">
+                        Questionnaire Page
+                      </h1>
+                      <p className="text-slate-600">
+                        This page will be implemented in the next phase.
+                      </p>
+                    </div>
+                  </div>
+                </ProtectedRoute>
+              }
+            />
+            
+            {/* Protected Admin Routes */}
+            <Route
+              path="/admin/*"
+              element={
+                <ProtectedRoute adminOnly>
+                  <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+                    <div className="text-center">
+                      <h1 className="text-3xl font-bold text-white mb-4">
+                        Admin Dashboard
+                      </h1>
+                      <p className="text-slate-300">
+                        This page will be implemented in the next phase.
+                      </p>
+                    </div>
+                  </div>
+                </ProtectedRoute>
+              }
+            />
+            
+            {/* 404 Route */}
+            <Route
+              path="*"
+              element={
+                <div className="min-h-screen bg-gradient-to-br from-primary-forest via-primary-forest/90 to-neutral-charcoal flex items-center justify-center">
+                  <div className="text-center">
+                    <h1 className="text-6xl font-bold text-white mb-4">404</h1>
+                    <p className="text-neutral-cream/80 text-xl mb-8">Page not found</p>
+                    <button
+                      onClick={() => window.location.href = '/'}
+                      className="btn-primary"
+                    >
+                      Go Home
+                    </button>
+                  </div>
+                </div>
+              }
+            />
+          </Routes>
+        </div>
+      </AuthProvider>
+    </Router>
   );
 }
 
