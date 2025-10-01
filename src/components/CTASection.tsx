@@ -190,12 +190,12 @@ const CTASection: React.FC = () => {
               <div className="text-center">
                 <p className="text-gray-600 mb-4">Or call us directly</p>
                 <motion.a
-                  href="tel:+1-555-0123"
+                  href="tel:+91-9876543210"
                   className="inline-flex items-center space-x-2 text-primary-emerald font-semibold hover:text-primary-forest transition-colors duration-300"
                   whileHover={{ scale: 1.05 }}
                 >
                   <Phone className="h-5 w-5" />
-                  <span>+1 (555) 012-3456</span>
+                  <span>+91 9876543210</span>
                 </motion.a>
               </div>
             </div>
