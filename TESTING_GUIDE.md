@@ -37,7 +37,7 @@
 2. Switch to "Admin Login" tab
 3. Enter admin credentials:
    ```
-   Email: admin@certifypro.com
+   Email: prathik@gmail.com
    Password: Admin@123
    ```
 4. Click "Admin Sign In"
@@ -176,10 +176,11 @@ Test on:
 ## 📝 Notes
 
 - Mock authentication uses localStorage
-- Default admin: `admin@certifypro.com` / `Admin@123`
+- Default admin: `prathik@gmail.com` / `Admin@123`
 - Tokens expire after 24 hours
 - Passwords are hashed with bcryptjs
 - Google Sign-In is placeholder (not functional yet)
+- Server runs on port 3001 and accessible on 0.0.0.0
 
 ---
 

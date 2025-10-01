@@ -145,7 +145,7 @@ The authentication system uses localStorage to simulate a backend:
 - `mockUsers` - Mock user database
 
 ### Default Admin Account
-- Email: `admin@certifypro.com`
+- Email: `prathik@gmail.com`
 - Password: `Admin@123`
 - Type: admin
 

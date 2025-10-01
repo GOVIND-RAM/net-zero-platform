@@ -88,6 +88,37 @@ const LoginForm: React.FC = () => {
     }
   };
 
+  const handleDummyLogin = async (userType: 'customer' | 'admin') => {
+    setIsSubmitting(true);
+    setSubmitError('');
+    setSubmitSuccess('');
+
+    try {
+      // Use dummy credentials for quick testing
+      const dummyEmail = userType === 'admin' ? 'admin@test.com' : 'customer@test.com';
+      const dummyPassword = 'test123';
+      
+      const result = await login(dummyEmail, dummyPassword, userType);
+      
+      if (result.success) {
+        setSubmitSuccess(`Logged in as test ${userType}!`);
+        setTimeout(() => {
+          if (userType === 'admin') {
+            navigate('/admin');
+          } else {
+            navigate('/dashboard');
+          }
+        }, 1500);
+      } else {
+        setSubmitError(result.message);
+      }
+    } catch (error) {
+      setSubmitError('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Tabs */}
@@ -270,6 +301,84 @@ const LoginForm: React.FC = () => {
             <span>{activeTab === 'customer' ? 'Sign In' : 'Admin Sign In'}</span>
           )}
         </motion.button>
+
+        {/* Divider */}
+        <div className="relative my-6">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-300" />
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-4 bg-white text-gray-500">OR</span>
+          </div>
+        </div>
+
+        {/* Dummy Login Section - Customer */}
+        {activeTab === 'customer' && (
+          <div className="dummy-login-section-wrapper bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
+            <div className="flex items-center justify-center space-x-2 mb-3">
+              <div className="dummy-login-badge bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">
+                TEST MODE
+              </div>
+              <p className="text-blue-700 text-sm font-medium">Quick Login for Testing</p>
+            </div>
+            
+            <motion.button
+              type="button"
+              onClick={() => handleDummyLogin('customer')}
+              disabled={isSubmitting}
+              className="dummy-login-btn-customer w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2.5 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+              whileHover={!isSubmitting ? { scale: 1.02 } : {}}
+              whileTap={!isSubmitting ? { scale: 0.98 } : {}}
+            >
+              {isSubmitting ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <>
+                  <span>🧪</span>
+                  <span>Login as Test Customer</span>
+                </>
+              )}
+            </motion.button>
+            
+            <p className="text-blue-600 text-xs text-center mt-3">
+              No credentials needed - instant access for testing
+            </p>
+          </div>
+        )}
+
+        {/* Dummy Login Section - Admin */}
+        {activeTab === 'admin' && (
+          <div className="dummy-login-section-wrapper bg-purple-50 border-2 border-purple-200 rounded-lg p-4">
+            <div className="flex items-center justify-center space-x-2 mb-3">
+              <div className="dummy-login-badge bg-purple-500 text-white text-xs font-semibold px-2 py-1 rounded">
+                TEST MODE
+              </div>
+              <p className="text-purple-700 text-sm font-medium">Quick Admin Access for Testing</p>
+            </div>
+            
+            <motion.button
+              type="button"
+              onClick={() => handleDummyLogin('admin')}
+              disabled={isSubmitting}
+              className="dummy-login-btn-admin w-full bg-purple-500 hover:bg-purple-600 text-white font-medium py-2.5 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+              whileHover={!isSubmitting ? { scale: 1.02 } : {}}
+              whileTap={!isSubmitting ? { scale: 0.98 } : {}}
+            >
+              {isSubmitting ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <>
+                  <Shield className="h-4 w-4" />
+                  <span>Login as Test Admin</span>
+                </>
+              )}
+            </motion.button>
+            
+            <p className="text-purple-600 text-xs text-center mt-3">
+              No credentials needed - instant access for testing
+            </p>
+          </div>
+        )}
 
         {/* Google Sign-In (Only for customers) */}
         {activeTab === 'customer' && (

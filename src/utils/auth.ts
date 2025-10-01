@@ -1,37 +1,34 @@
 import bcrypt from 'bcryptjs';
 import { StoredUser, User } from '../types';
 
-// Storage keys
-const AUTH_TOKEN_KEY = 'authToken';
-const USER_DATA_KEY = 'userData';
-const USER_TYPE_KEY = 'userType';
-const MOCK_USERS_KEY = 'mockUsers';
+// In-memory storage for mock users
+let mockUsers: StoredUser[] = [];
 
-// Initialize mock users with default admin
+// In-memory storage for current session
+let currentSession: {
+  token: string | null;
+  user: User | null;
+  userType: 'customer' | 'admin' | null;
+} = {
+  token: null,
+  user: null,
+  userType: null,
+};
+
+// Initialize mock users (empty for open authentication)
 export const initializeMockUsers = (): void => {
-  const existingUsers = getMockUsers();
-  if (existingUsers.length === 0) {
-    const defaultAdmin: StoredUser = {
-      id: '1',
-      email: 'admin@certifypro.com',
-      password: bcrypt.hashSync('Admin@123', 10),
-      name: 'Admin User',
-      type: 'admin',
-      createdAt: new Date().toISOString(),
-    };
-    localStorage.setItem(MOCK_USERS_KEY, JSON.stringify([defaultAdmin]));
-  }
+  // No predefined users - accept any credentials
+  mockUsers = [];
 };
 
 // Get all mock users
 export const getMockUsers = (): StoredUser[] => {
-  const users = localStorage.getItem(MOCK_USERS_KEY);
-  return users ? JSON.parse(users) : [];
+  return mockUsers;
 };
 
 // Save mock users
 const saveMockUsers = (users: StoredUser[]): void => {
-  localStorage.setItem(MOCK_USERS_KEY, JSON.stringify(users));
+  mockUsers = users;
 };
 
 // Generate mock JWT token
@@ -51,47 +48,46 @@ export const verifyToken = (token: string): boolean => {
   }
 };
 
-// Store authentication data
+// Store authentication data (in memory)
 export const storeAuthData = (token: string, user: User): void => {
-  localStorage.setItem(AUTH_TOKEN_KEY, token);
-  localStorage.setItem(USER_DATA_KEY, JSON.stringify(user));
-  localStorage.setItem(USER_TYPE_KEY, user.type);
+  currentSession = {
+    token,
+    user,
+    userType: user.type,
+  };
 };
 
-// Get stored authentication data
+// Get stored authentication data (from memory)
 export const getStoredAuthData = (): { token: string | null; user: User | null; userType: 'customer' | 'admin' | null } => {
-  const token = localStorage.getItem(AUTH_TOKEN_KEY);
-  const userData = localStorage.getItem(USER_DATA_KEY);
-  const userType = localStorage.getItem(USER_TYPE_KEY) as 'customer' | 'admin' | null;
-  
-  let user: User | null = null;
-  if (userData) {
-    try {
-      user = JSON.parse(userData);
-    } catch {
-      user = null;
-    }
-  }
-  
-  return { token, user, userType };
+  return currentSession;
 };
 
 // Clear authentication data
 export const clearAuthData = (): void => {
-  localStorage.removeItem(AUTH_TOKEN_KEY);
-  localStorage.removeItem(USER_DATA_KEY);
-  localStorage.removeItem(USER_TYPE_KEY);
+  currentSession = {
+    token: null,
+    user: null,
+    userType: null,
+  };
 };
 
-// Check if user exists
+// Check if user exists - always returns false for open authentication
 export const userExists = (email: string): boolean => {
-  const users = getMockUsers();
-  return users.some(user => user.email.toLowerCase() === email.toLowerCase());
+  // Allow any email to sign up
+  return false;
 };
 
-// Create new user
+// Create new user - accepts any credentials
 export const createUser = (email: string, password: string, name: string, organization?: string): StoredUser => {
   const users = getMockUsers();
+  
+  // Check if user already exists for this email and type
+  let existingUser = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.type === 'customer');
+  
+  if (existingUser) {
+    return existingUser;
+  }
+  
   const newUser: StoredUser = {
     id: `user-${Date.now()}`,
     email,
@@ -106,17 +102,28 @@ export const createUser = (email: string, password: string, name: string, organi
   return newUser;
 };
 
-// Authenticate user
+// Authenticate user - accepts any credentials and creates user on-the-fly
 export const authenticateUser = (email: string, password: string, userType: 'customer' | 'admin'): StoredUser | null => {
+  // Accept any email and password combination
+  // Create or return existing user
   const users = getMockUsers();
-  const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.type === userType);
+  let user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.type === userType);
   
   if (!user) {
-    return null;
+    // Create new user on-the-fly
+    user = {
+      id: `${userType}-${Date.now()}`,
+      email,
+      password: bcrypt.hashSync(password, 10),
+      name: userType === 'admin' ? 'Admin User' : 'Customer User',
+      type: userType,
+      createdAt: new Date().toISOString(),
+    };
+    users.push(user);
+    saveMockUsers(users);
   }
   
-  const isPasswordValid = bcrypt.compareSync(password, user.password);
-  return isPasswordValid ? user : null;
+  return user;
 };
 
 // Convert stored user to user (remove password)
@@ -138,4 +145,3 @@ export const updateStoredUser = (userId: string, updates: Partial<StoredUser>): 
   saveMockUsers(users);
   return users[userIndex];
 };
-

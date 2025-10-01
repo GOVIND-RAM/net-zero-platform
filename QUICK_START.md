@@ -62,10 +62,10 @@ Try:
 ## Admin Access
 
 ```
-Email: admin@certifypro.com
+Email: prathik@gmail.com
 Password: Admin@123
 
-1. Go to: http://localhost:3000/login
+1. Go to: http://localhost:3001/login
 2. Switch to "Admin Login" tab
 3. Enter credentials above
 4. Click "Admin Sign In"
@@ -76,11 +76,13 @@ Result: ✅ Admin dashboard (placeholder)
 ## Key URLs
 
 ```
-Landing:       http://localhost:3000/
-Signup:        http://localhost:3000/signup
-Login:         http://localhost:3000/login
-Dashboard:     http://localhost:3000/dashboard  (protected)
-Admin:         http://localhost:3000/admin      (protected)
+Landing:       http://localhost:3001/
+Signup:        http://localhost:3001/signup
+Login:         http://localhost:3001/login
+Dashboard:     http://localhost:3001/dashboard  (protected)
+Admin:         http://localhost:3001/admin      (protected)
+
+Network:       http://0.0.0.0:3001/  (accessible from other devices)
 ```
 
 ## Troubleshooting
@@ -238,7 +240,7 @@ Customer Account:
 - Create your own via /signup
 
 Admin Account:
-- Email: admin@certifypro.com
+- Email: prathik@gmail.com
 - Password: Admin@123
 ```
 
