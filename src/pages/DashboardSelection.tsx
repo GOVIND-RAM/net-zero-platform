@@ -53,7 +53,7 @@ const DashboardSelection: React.FC = () => {
   ];
 
   const handleCertificationSelect = (typeId: string) => {
-    navigate(`/certification/questionnaire?type=${typeId}`);
+    navigate(`/dashboard/projects/${typeId}`);
   };
 
   const handleAddNew = () => {
@@ -95,7 +95,7 @@ const DashboardSelection: React.FC = () => {
                 onClick={() => setShowUserMenu(!showUserMenu)}
                 className="flex items-center space-x-3 hover:bg-slate-100 rounded-lg px-3 py-2 transition-colors"
               >
-                <div className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
+                <div className="w-10 h-10 bg-primary-emerald rounded-full flex items-center justify-center text-white font-semibold">
                   {authState.user?.avatar ? (
                     <img
                       src={authState.user.avatar}

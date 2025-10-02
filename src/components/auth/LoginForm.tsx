@@ -316,7 +316,7 @@ const LoginForm: React.FC = () => {
         {activeTab === 'customer' && (
           <div className="dummy-login-section-wrapper bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
             <div className="flex items-center justify-center space-x-2 mb-3">
-              <div className="dummy-login-badge bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">
+              <div className="dummy-login-badge bg-primary-emerald text-white text-xs font-semibold px-2 py-1 rounded">
                 TEST MODE
               </div>
               <p className="text-blue-700 text-sm font-medium">Quick Login for Testing</p>
@@ -326,7 +326,7 @@ const LoginForm: React.FC = () => {
               type="button"
               onClick={() => handleDummyLogin('customer')}
               disabled={isSubmitting}
-              className="dummy-login-btn-customer w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2.5 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+              className="dummy-login-btn-customer w-full bg-primary-emerald hover:bg-primary-forest text-white font-medium py-2.5 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
               whileHover={!isSubmitting ? { scale: 1.02 } : {}}
               whileTap={!isSubmitting ? { scale: 0.98 } : {}}
             >
@@ -340,7 +340,7 @@ const LoginForm: React.FC = () => {
               )}
             </motion.button>
             
-            <p className="text-blue-600 text-xs text-center mt-3">
+            <p className="text-primary-emerald text-xs text-center mt-3">
               No credentials needed - instant access for testing
             </p>
           </div>

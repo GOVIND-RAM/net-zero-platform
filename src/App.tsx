@@ -8,6 +8,12 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import DashboardSelection from './pages/DashboardSelection';
+import ProjectsDashboardPage from './pages/ProjectsDashboardPage';
+import NewProjectPage from './pages/NewProjectPage';
+import ProjectCreationPage from './pages/ProjectCreationPage';
+import ProjectOverviewPage from './pages/ProjectOverviewPage';
+import ProjectDashboardPage from './pages/ProjectDashboardPage';
+import KPIDetailPage from './pages/KPIDetailPage';
 
 // Components
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -30,6 +36,55 @@ function App() {
               element={
                 <ProtectedRoute>
                   <DashboardSelection />
+                </ProtectedRoute>
+              }
+            />
+            
+            {/* Project Management Routes */}
+            <Route
+              path="/dashboard/projects/:certificationType"
+              element={
+                <ProtectedRoute>
+                  <ProjectsDashboardPage />
+                </ProtectedRoute>
+              }
+            />
+            
+            <Route
+              path="/projects/new/:certificationType"
+              element={
+                <ProtectedRoute>
+                  <NewProjectPage />
+                </ProtectedRoute>
+              }
+            />
+            
+            {/* Project Creation Flow */}
+            <Route
+              path="/project/create"
+              element={
+                <ProtectedRoute>
+                  <ProjectCreationPage />
+                </ProtectedRoute>
+              }
+            />
+            
+            {/* Project Dashboard and KPI Routes */}
+            <Route
+              path="/project/dashboard"
+              element={
+                <ProtectedRoute>
+                  <ProjectDashboardPage />
+                </ProtectedRoute>
+              }
+            />
+            
+            
+            <Route
+              path="/project/kpi/:categoryId"
+              element={
+                <ProtectedRoute>
+                  <KPIDetailPage />
                 </ProtectedRoute>
               }
             />
