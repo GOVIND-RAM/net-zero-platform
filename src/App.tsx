@@ -4,16 +4,16 @@ import { AuthProvider } from './context/AuthContext';
 
 // Pages
 import LandingPage from './pages/LandingPage';
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
-import ForgotPasswordPage from './pages/ForgotPasswordPage';
-import DashboardSelection from './pages/DashboardSelection';
-import ProjectsDashboardPage from './pages/ProjectsDashboardPage';
-import NewProjectPage from './pages/NewProjectPage';
-import ProjectCreationPage from './pages/ProjectCreationPage';
-import ProjectOverviewPage from './pages/ProjectOverviewPage';
-import ProjectDashboardPage from './pages/ProjectDashboardPage';
-import KPIDetailPage from './pages/KPIDetailPage';
+import LoginPage from './pages/auth/LoginPage';
+import SignupPage from './pages/auth/SignupPage';
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
+import DashboardSelection from './pages/dashboard/DashboardSelection';
+import ProjectsDashboardPage from './pages/dashboard/ProjectsDashboardPage';
+import NewProjectPage from './pages/projects/NewProjectPage';
+import ProjectCreationPage from './pages/projects/ProjectCreationPage';
+import ProjectOverviewPage from './pages/projects/ProjectOverviewPage';
+import ProjectDashboardPage from './pages/projects/ProjectDashboardPage';
+import KPIDetailPage from './pages/projects/KPIDetailPage';
 
 // Components
 import ProtectedRoute from './components/common/ProtectedRoute';

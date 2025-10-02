@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Mail, ArrowLeft, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import AuthLayout from '../components/auth/AuthLayout';
-import { validateEmail } from '../utils/validation';
+import AuthLayout from './AuthLayout';
+import { validateEmail } from '../../utils/validation';
 
 const ForgotPasswordPage: React.FC = () => {
   const navigate = useNavigate();

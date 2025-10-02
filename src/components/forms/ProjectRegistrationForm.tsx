@@ -7,7 +7,7 @@ import {
   industryOptions,
   countryOptions,
   stateOptions
-} from '../../data/mockData';
+} from '../../services/mockData';
 
 interface ProjectRegistrationFormProps {
   currentStep: number;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import MainLayout from '../components/common/MainLayout';
-import PageHeader from '../components/common/PageHeader';
-import ProjectsTable from '../components/projects/ProjectsTable';
-import { getProjectsByType, Project } from '../data/mockData';
+import MainLayout from '../../components/layout/MainLayout';
+import PageHeader from '../../components/common/PageHeader';
+import ProjectsTable from '../../components/forms/ProjectsTable';
+import { getProjectsByType, Project } from '../../services/mockData';
 
 const ProjectsDashboardPage: React.FC = () => {
   const { certificationType } = useParams<{ certificationType: string }>();

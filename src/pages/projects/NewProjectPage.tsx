@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import FormStepper from '../components/projects/FormStepper';
-import ProjectRegistrationForm from '../components/projects/ProjectRegistrationForm';
+import FormStepper from '../../components/forms/FormStepper';
+import ProjectRegistrationForm from '../../components/forms/ProjectRegistrationForm';
 
 const NewProjectPage: React.FC = () => {
   const { certificationType } = useParams<{ certificationType: string }>();

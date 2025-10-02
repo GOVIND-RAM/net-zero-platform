@@ -1,6 +1,6 @@
 import React from 'react';
-import AuthLayout from '../components/auth/AuthLayout';
-import SignupForm from '../components/auth/SignupForm';
+import AuthLayout from './AuthLayout';
+import SignupForm from './SignupForm';
 
 const SignupPage: React.FC = () => {
   return (

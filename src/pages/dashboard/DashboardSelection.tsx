@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import {
   Building2,
   Briefcase,
@@ -22,7 +22,7 @@ import {
   Award,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import CertificationTypeCard from '../components/dashboard/CertificationTypeCard';
+import CertificationTypeCard from '../../components/dashboard/CertificationTypeCard';
 
 interface CertificationType {
   id: string;

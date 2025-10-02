@@ -1,14 +1,14 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Hero from '../components/Hero';
-import CertificationTypes from '../components/CertificationTypes';
-import ProcessTimeline from '../components/ProcessTimeline';
-import FeatureShowcase from '../components/FeatureShowcase';
-import PlatformFeatures from '../components/PlatformFeatures';
-import CaseStudy from '../components/CaseStudy';
-import WhyChooseUs from '../components/WhyChooseUs';
-import CTASection from '../components/CTASection';
-import Footer from '../components/Footer';
+import Navbar from '../components/layout/Navbar';
+import Hero from '../components/ui/Hero';
+import CertificationTypes from '../components/ui/CertificationTypes';
+import ProcessTimeline from '../components/ui/ProcessTimeline';
+import FeatureShowcase from '../components/ui/FeatureShowcase';
+import PlatformFeatures from '../components/ui/PlatformFeatures';
+import CaseStudy from '../components/ui/CaseStudy';
+import WhyChooseUs from '../components/ui/WhyChooseUs';
+import CTASection from '../components/ui/CTASection';
+import Footer from '../components/ui/Footer';
 
 const LandingPage: React.FC = () => {
   return (

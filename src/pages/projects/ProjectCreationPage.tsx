@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ProjectDetailsForm from '../components/projects/ProjectDetailsForm';
-import OwnerInformationForm from '../components/projects/OwnerInformationForm';
-import ProjectAddressForm from '../components/projects/ProjectAddressForm';
-import ProjectAgreementPage from '../components/projects/ProjectAgreementPage';
+import ProjectDetailsForm from '../../components/forms/ProjectDetailsForm';
+import OwnerInformationForm from '../../components/forms/OwnerInformationForm';
+import ProjectAddressForm from '../../components/forms/ProjectAddressForm';
+import ProjectAgreementPage from '../../components/forms/ProjectAgreementPage';
 
 interface ProjectData {
   // Project Details
