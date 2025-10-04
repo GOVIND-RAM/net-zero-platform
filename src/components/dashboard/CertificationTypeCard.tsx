@@ -26,20 +26,20 @@ const CertificationTypeCard: React.FC<CertificationTypeCardProps> = ({
       whileHover={{ y: -4 }}
       whileTap={{ scale: 0.98 }}
     >
-      <div className="flex flex-col items-center text-center space-y-4">
+      <div className="certification-type-card-content flex flex-col items-center text-center space-y-4">
         {/* Icon */}
         <div
-          className={`transition-colors ${
+          className={`certification-type-card-icon-container transition-colors ${
             isAddNew
               ? 'text-primary-emerald'
               : 'text-slate-700 group-hover:text-primary-emerald'
           }`}
         >
-          <Icon className="w-16 h-16" strokeWidth={1.5} />
+          <Icon className="certification-type-card-icon w-16 h-16" strokeWidth={1.5} />
         </div>
         
         {/* Title */}
-        <h3 className="text-xl font-semibold text-slate-900">
+        <h3 className="certification-type-card-title text-xl font-semibold text-slate-900">
           {title}
         </h3>
       </div>

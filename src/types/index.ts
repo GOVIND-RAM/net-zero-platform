@@ -76,3 +76,75 @@ export interface StoredUser {
   type: 'customer' | 'admin';
 }
 
+// Questionnaire Types
+export interface QuestionnaireQuestion {
+  id: string;
+  label: string;
+  type: 'dropdown' | 'yes-no' | 'multiselect';
+  options?: string[];
+  required?: boolean;
+  description?: string;
+}
+
+export interface QuestionnaireRequiredUpload {
+  id: string;
+  label: string;
+  description?: string;
+  fileTypes?: string[];
+  maxSize?: number; // in MB
+}
+
+export interface QuestionnaireKpi {
+  id: string;
+  title: string;
+  description?: string;
+  questions: QuestionnaireQuestion[];
+  uploads: QuestionnaireRequiredUpload[];
+  maxPoints?: number;
+}
+
+export interface QuestionnaireCategory {
+  id: string;
+  title: string;
+  description?: string;
+  kpis: QuestionnaireKpi[];
+}
+
+// User Response Types
+export interface QuestionResponse {
+  questionId: string;
+  value: string | string[] | boolean;
+  timestamp: string;
+}
+
+export interface FileUploadResponse {
+  uploadId: string;
+  file: File;
+  status: 'uploading' | 'completed' | 'error';
+  error?: string;
+}
+
+export interface KpiProgress {
+  kpiId: string;
+  completedQuestions: number;
+  totalQuestions: number;
+  completedUploads: number;
+  totalUploads: number;
+  isComplete: boolean;
+}
+
+export interface CategoryProgress {
+  categoryId: string;
+  completedKpis: number;
+  totalKpis: number;
+  overallProgress: number; // percentage
+}
+
+export interface ProjectQuestionnaireState {
+  projectId: string;
+  responses: QuestionResponse[];
+  uploads: FileUploadResponse[];
+  lastSaved: string;
+  isDirty: boolean;
+}
+

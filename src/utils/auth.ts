@@ -48,17 +48,43 @@ export const verifyToken = (token: string): boolean => {
   }
 };
 
-// Store authentication data (in memory)
+// Store authentication data (persistent)
 export const storeAuthData = (token: string, user: User): void => {
-  currentSession = {
+  const authData = {
     token,
     user,
     userType: user.type,
   };
+  
+  // Store in memory
+  currentSession = authData;
+  
+  // Store in localStorage for persistence
+  localStorage.setItem('authData', JSON.stringify(authData));
 };
 
-// Get stored authentication data (from memory)
+// Get stored authentication data (from localStorage or memory)
 export const getStoredAuthData = (): { token: string | null; user: User | null; userType: 'customer' | 'admin' | null } => {
+  try {
+    // Try to get from localStorage first
+    const stored = localStorage.getItem('authData');
+    if (stored) {
+      const authData = JSON.parse(stored);
+      // Verify token is still valid
+      if (authData.token && verifyToken(authData.token)) {
+        // Update memory session
+        currentSession = authData;
+        return authData;
+      } else {
+        // Token expired, clear storage
+        clearAuthData();
+      }
+    }
+  } catch (error) {
+    console.error('Error reading auth data from localStorage:', error);
+    clearAuthData();
+  }
+  
   return currentSession;
 };
 
@@ -69,6 +95,9 @@ export const clearAuthData = (): void => {
     user: null,
     userType: null,
   };
+  
+  // Clear from localStorage
+  localStorage.removeItem('authData');
 };
 
 // Check if user exists - always returns false for open authentication

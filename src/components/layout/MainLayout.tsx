@@ -93,24 +93,24 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div className="main-layout-container min-h-screen bg-slate-100">
       {/* Mobile Overlay */}
       {isSidebarOpen && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          className="main-layout-mobile-overlay fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
       
       {/* Desktop Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 bg-white border-r border-slate-200 transition-all duration-300 ${
+      <div className={`main-layout-sidebar fixed inset-y-0 left-0 z-50 bg-white border-r border-slate-200 transition-all duration-300 ${
         isSidebarOpen ? 'w-64' : 'w-20'
       } hidden md:block`}>
-        <div className="flex flex-col h-full">
+        <div className="sidebar-content flex flex-col h-full">
           {/* Logo */}
-          <div className={`flex items-center ${isSidebarOpen ? 'justify-between' : 'justify-center'} px-4 py-3 border-b border-slate-200`}>
-            <div className="flex items-center">
-              <div className="bg-primary-emerald p-1.5 rounded-lg">
+          <div className={`sidebar-header flex items-center ${isSidebarOpen ? 'justify-between' : 'justify-center'} px-4 py-3 border-b border-slate-200`}>
+            <div className="sidebar-logo flex items-center">
+              <div className="sidebar-logo-icon bg-primary-emerald p-1.5 rounded-lg">
                 <Award className="h-5 w-5 text-white" />
               </div>
               {isSidebarOpen && (
@@ -132,7 +132,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 px-3 py-4 space-y-1">
+          <nav className="sidebar-navigation flex-1 px-3 py-4 space-y-1">
             {sidebarItems.map((item) => {
               const Icon = item.icon;
               return (
@@ -154,14 +154,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           </nav>
 
           {/* User section */}
-          <div className="px-3 py-3 border-t border-slate-200">
+          <div className="sidebar-user-section px-3 py-3 border-t border-slate-200">
             {isSidebarOpen ? (
               <>
-                <div className="flex items-center mb-3">
-                  <div className="w-8 h-8 bg-primary-emerald rounded-full flex items-center justify-center">
+                <div className="sidebar-user-info flex items-center mb-3">
+                  <div className="sidebar-user-avatar w-8 h-8 bg-primary-emerald rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-semibold">U</span>
                   </div>
-                  <div className="ml-3">
+                  <div className="sidebar-user-details ml-3">
                     <p className="text-sm font-medium text-gray-900">User Name</p>
                     <p className="text-xs text-gray-500">user@example.com</p>
                   </div>
@@ -175,8 +175,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 </button>
               </>
             ) : (
-              <div className="flex flex-col items-center space-y-3">
-                <div className="w-8 h-8 bg-primary-emerald rounded-full flex items-center justify-center">
+              <div className="sidebar-user-collapsed flex flex-col items-center space-y-3">
+                <div className="sidebar-user-avatar-collapsed w-8 h-8 bg-primary-emerald rounded-full flex items-center justify-center">
                   <span className="text-white text-sm font-semibold">U</span>
                 </div>
                 <button
@@ -193,14 +193,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       </div>
       
       {/* Mobile Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 bg-white border-r border-slate-200 transition-all duration-300 md:hidden ${
+      <div className={`main-layout-mobile-sidebar fixed inset-y-0 left-0 z-50 bg-white border-r border-slate-200 transition-all duration-300 md:hidden ${
         isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
       } w-64`}>
-        <div className="flex flex-col h-full">
+        <div className="mobile-sidebar-content flex flex-col h-full">
           {/* Logo */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200">
-            <div className="flex items-center">
-              <div className="bg-primary-emerald p-1.5 rounded-lg">
+          <div className="mobile-sidebar-header flex items-center justify-between px-4 py-3 border-b border-slate-200">
+            <div className="mobile-sidebar-logo flex items-center">
+              <div className="mobile-sidebar-logo-icon bg-primary-emerald p-1.5 rounded-lg">
                 <Award className="h-5 w-5 text-white" />
               </div>
               <span className="ml-3 text-lg font-bold text-slate-900">EcoZero Certify</span>
@@ -216,7 +216,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 px-3 py-4 space-y-1">
+          <nav className="mobile-sidebar-navigation flex-1 px-3 py-4 space-y-1">
             {sidebarItems.map((item) => {
               const Icon = item.icon;
               return (
@@ -238,12 +238,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           </nav>
 
           {/* User section */}
-          <div className="px-3 py-3 border-t border-slate-200">
-            <div className="flex items-center mb-3">
-              <div className="w-8 h-8 bg-primary-emerald rounded-full flex items-center justify-center">
+          <div className="mobile-sidebar-user-section px-3 py-3 border-t border-slate-200">
+            <div className="mobile-sidebar-user-info flex items-center mb-3">
+              <div className="mobile-sidebar-user-avatar w-8 h-8 bg-primary-emerald rounded-full flex items-center justify-center">
                 <span className="text-white text-sm font-semibold">U</span>
               </div>
-              <div className="ml-3">
+              <div className="mobile-sidebar-user-details ml-3">
                 <p className="text-sm font-medium text-gray-900">User Name</p>
                 <p className="text-xs text-gray-500">user@example.com</p>
               </div>
@@ -260,12 +260,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       </div>
 
       {/* Main content */}
-      <div className={`transition-all duration-300 ${isSidebarOpen ? 'md:pl-64' : 'md:pl-20'}`}>
+      <div className={`main-content-wrapper transition-all duration-300 ${isSidebarOpen ? 'md:pl-64' : 'md:pl-20'}`}>
         {/* Top navigation bar */}
-        <div className="bg-white border-b border-slate-200 px-4 py-2 lg:px-6 lg:py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center min-w-0 flex-1">
-              {location.pathname !== '/dashboard' && (
+        <div className="main-top-navbar bg-white border-b border-slate-200 px-4 py-2 lg:px-6 lg:py-3">
+          <div className="top-navbar-content flex items-center justify-between">
+            <div className="top-navbar-left flex items-center min-w-0 flex-1">
+              {location.pathname !== '/dashboard' && !location.pathname.includes('/dashboard/projects/') && (
                 <Link
                   to="/dashboard"
                   className="hidden sm:flex items-center text-gray-600 hover:text-primary-emerald transition-colors mr-4"
@@ -278,7 +278,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 {certificationType ? `${certificationType.charAt(0).toUpperCase() + certificationType.slice(1)} Projects` : 'Dashboard'}
               </h1>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="top-navbar-right flex items-center space-x-2">
               <button className="text-gray-600 hover:text-primary-emerald transition-colors p-1.5">
                 <Settings className="h-5 w-5" />
               </button>
@@ -287,7 +287,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         </div>
 
         {/* Page content */}
-        <main className="p-4 md:p-6">
+        <main className="main-page-content p-4 md:p-6">
           {children}
         </main>
       </div>

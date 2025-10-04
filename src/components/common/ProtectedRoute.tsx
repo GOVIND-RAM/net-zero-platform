@@ -14,10 +14,10 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, adminOnly = f
   // Show loading spinner while checking auth status
   if (authState.loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary-forest via-primary-forest/90 to-neutral-charcoal flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="h-12 w-12 text-primary-emerald animate-spin mx-auto mb-4" />
-          <p className="text-slate-300 text-lg">Loading...</p>
+      <div className="protected-route-loading-container min-h-screen bg-gradient-to-br from-primary-forest via-primary-forest/90 to-neutral-charcoal flex items-center justify-center">
+        <div className="protected-route-loading-content text-center">
+          <Loader2 className="protected-route-loading-spinner h-12 w-12 text-primary-emerald animate-spin mx-auto mb-4" />
+          <p className="protected-route-loading-text text-slate-300 text-lg">Loading...</p>
         </div>
       </div>
     );

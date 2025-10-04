@@ -3,17 +3,17 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 
 // Pages
-import LandingPage from './pages/LandingPage';
-import LoginPage from './pages/auth/LoginPage';
-import SignupPage from './pages/auth/SignupPage';
-import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
-import DashboardSelection from './pages/dashboard/DashboardSelection';
-import ProjectsDashboardPage from './pages/dashboard/ProjectsDashboardPage';
-import NewProjectPage from './pages/projects/NewProjectPage';
-import ProjectCreationPage from './pages/projects/ProjectCreationPage';
-import ProjectOverviewPage from './pages/projects/ProjectOverviewPage';
-import ProjectDashboardPage from './pages/projects/ProjectDashboardPage';
-import KPIDetailPage from './pages/projects/KPIDetailPage';
+import LandingPage from './components/landing/LandingPage';
+import LoginPage from './components/authentication/LoginPage';
+import SignupPage from './components/authentication/SignupPage';
+import ForgotPasswordPage from './components/authentication/ForgotPasswordPage';
+import DashboardSelection from './components/dashboard/DashboardSelection';
+import ProjectsDashboardPage from './components/dashboard/ProjectsDashboardPage';
+import NewProjectPage from './components/projects/NewProjectPage';
+import ProjectCreationPage from './components/projects/ProjectCreationPage';
+import ProjectOverviewPage from './components/projects/ProjectOverviewPage';
+import ProjectDashboardPage from './components/projects/ProjectDashboardPage';
+import KPIDetailPage from './components/projects/KPIDetailPage';
 
 // Components
 import ProtectedRoute from './components/common/ProtectedRoute';

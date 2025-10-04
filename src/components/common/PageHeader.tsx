@@ -17,14 +17,14 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   onCreateClick
 }) => {
   return (
-    <div className="mb-8">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-bold text-neutral-charcoal mb-2">
+    <div className="page-header mb-8">
+      <div className="page-header-content flex items-center justify-between">
+        <div className="page-header-text">
+          <h1 className="page-header-title text-4xl font-bold text-neutral-charcoal mb-2">
             {title}
           </h1>
           {subtitle && (
-            <p className="text-gray-600 text-lg">
+            <p className="page-header-subtitle text-gray-600 text-lg">
               {subtitle}
             </p>
           )}
@@ -33,10 +33,10 @@ const PageHeader: React.FC<PageHeaderProps> = ({
         {showCreateButton && (
           <button
             onClick={onCreateClick}
-            className="btn-primary flex items-center space-x-2"
+            className="page-header-create-button btn-primary flex items-center space-x-2"
           >
-            <PlusCircle className="h-5 w-5" />
-            <span>{createButtonText}</span>
+            <PlusCircle className="page-header-create-icon h-5 w-5" />
+            <span className="page-header-create-text">{createButtonText}</span>
           </button>
         )}
       </div>

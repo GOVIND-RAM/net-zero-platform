@@ -66,17 +66,17 @@ const Navbar: React.FC = () => {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled ? 'bg-white shadow-lg' : 'bg-transparent'
     }`}>
-      <div className="container-custom">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+      <div className="navbar-container container-custom">
+        <div className="navbar-content flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <motion.div 
-            className="flex items-center space-x-2 cursor-pointer"
+            className="navbar-logo flex items-center space-x-2 cursor-pointer"
             onClick={() => navigate('/')}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="bg-primary-emerald p-2 rounded-lg">
+            <div className="navbar-logo-icon bg-primary-emerald p-2 rounded-lg">
               <Leaf className="h-6 w-6 text-white" />
             </div>
             <span className="text-xl lg:text-2xl font-heading font-bold text-neutral-charcoal">
@@ -85,7 +85,7 @@ const Navbar: React.FC = () => {
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="navbar-desktop-nav hidden lg:flex items-center space-x-8">
             {navItems.map((item, index) => (
               <motion.a
                 key={item.name}
@@ -103,7 +103,7 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Desktop CTA Buttons */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="navbar-desktop-cta hidden lg:flex items-center space-x-4">
             <motion.button
               onClick={handleLoginClick}
               className="text-neutral-charcoal hover:text-primary-emerald transition-colors duration-300 font-medium"
@@ -128,7 +128,7 @@ const Navbar: React.FC = () => {
 
           {/* Mobile Menu Button */}
           <motion.button
-            className="lg:hidden p-2"
+            className="navbar-mobile-toggle lg:hidden p-2"
             onClick={toggleMenu}
             whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0 }}
@@ -147,13 +147,13 @@ const Navbar: React.FC = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              className="lg:hidden fixed inset-0 bg-white z-40"
+              className="navbar-mobile-overlay lg:hidden fixed inset-0 bg-white z-40"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="flex flex-col items-center justify-center h-full space-y-8">
+              <div className="navbar-mobile-content flex flex-col items-center justify-center h-full space-y-8">
                 {navItems.map((item, index) => (
                   <motion.a
                     key={item.name}
@@ -168,7 +168,7 @@ const Navbar: React.FC = () => {
                     {item.name}
                   </motion.a>
                 ))}
-                <div className="flex flex-col space-y-4 mt-8">
+                <div className="navbar-mobile-cta flex flex-col space-y-4 mt-8">
                   <motion.button
                     onClick={handleLoginClick}
                     className="text-xl font-medium text-neutral-charcoal hover:text-primary-emerald transition-colors duration-300"

@@ -1,226 +1,84 @@
 # EcoZero Certify - Net Zero Certification Platform
 
-A modern, responsive landing page for a net zero certification platform built with React, TypeScript, and Tailwind CSS.
+A comprehensive net zero certification platform with complete authentication, project management, and KPI tracking systems.
 
-## 🚀 Features
+## 🚀 Quick Start
 
-- **Fully Responsive Design** - Optimized for mobile, tablet, and desktop
-- **Modern UI/UX** - Clean, professional design with nature-inspired elements
-- **Smooth Animations** - Framer Motion powered scroll animations and micro-interactions
-- **Accessibility First** - WCAG AA compliant with keyboard navigation support
-- **Performance Optimized** - Fast loading with lazy loading and code splitting
-- **Form Validation** - Complete form handling with validation and success states
+```bash
+# Start the development server
+npm start
 
-## 🎨 Design System
+# Access the application
+http://localhost:3001
 
-### Color Palette
-- **Primary**: Deep forest green (#0D3B2E) and emerald (#10B981)
-- **Accent**: Warm gold/amber (#F59E0B)
-- **Neutral**: Charcoal (#1F2937) and soft cream (#F9FAFB)
+# Admin Login
+Email: prathik@gmail.com
+Password: Admin@123
+```
 
-### Typography
-- **Headings**: Outfit (modern, bold)
-- **Body**: Inter (clean, readable)
+## 📚 Complete Documentation
+
+**👉 [docs/README.md](./docs/README.md) - Documentation Hub**
+
+All documentation is organized in the `docs/` folder:
+- **[Master Documentation](./docs/MASTER_DOCUMENTATION.md)** - Complete development guide
+- **[Backend API Documentation](./docs/BACKEND_API_DOCUMENTATION.md)** - MongoDB integration guide
+- **[API Endpoints Reference](./docs/API_ENDPOINTS_REFERENCE.md)** - Quick API reference
+- **[Color Guide](./docs/COLOR_GUIDE.md)** - Design system reference
+- **[Deployment Guide](./docs/DEPLOYMENT.md)** - Production deployment instructions
+
+## 🎯 Key Features
+
+- ✅ **Complete Authentication System** - Customer/Admin login with role-based access
+- ✅ **Project Management** - Multi-step project creation and tracking
+- ✅ **KPI Tracking** - Comprehensive sustainability metrics and progress monitoring
+- ✅ **Questionnaire System** - Dynamic forms with file uploads and validation
+- ✅ **Dashboard Analytics** - Progress tracking with visual indicators
+- ✅ **Responsive Design** - Mobile-first approach with accessibility compliance
 
 ## 🛠️ Tech Stack
 
 - **React 18** with TypeScript
-- **Tailwind CSS** for styling
+- **Tailwind CSS** for styling  
 - **Framer Motion** for animations
-- **Lucide React** for icons
-- **Responsive Design** with mobile-first approach
+- **React Router v6** for navigation
+- **React Context API** for state management
 
-## 📱 Responsive Breakpoints
+## 🎨 Design System
 
-- **Mobile**: 320px - 768px (single column, hamburger menu)
-- **Tablet**: 768px - 1024px (2-column grids, expanded navigation)
-- **Desktop**: 1024px+ (full multi-column layouts, maximum 1280px width)
+- **Primary Colors**: Emerald (#10B981) and Forest Green (#0D3B2E)
+- **Typography**: Outfit (headings) and Inter (body)
+- **Responsive**: Mobile-first design with Tailwind breakpoints
+- **Accessibility**: WCAG AA compliant
 
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js 16+ 
-- npm or yarn
-
-### Installation
-
-1. Clone the repository
-```bash
-git clone <repository-url>
-cd net-zero-platform
-```
-
-2. Install dependencies
-```bash
-npm install
-```
-
-3. Start the development server
-```bash
-npm start
-```
-
-4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-## 📦 Build for Production
+## 📦 Build & Deploy
 
 ```bash
+# Build for production
 npm run build
+
+# Deploy (see MASTER_DOCUMENTATION.md for detailed instructions)
+npm i -g vercel && vercel
 ```
 
-This builds the app for production to the `build` folder.
+## 📚 Documentation
 
-## 🎯 Key Components
+**For complete documentation, see [docs/MASTER_DOCUMENTATION.md](./docs/MASTER_DOCUMENTATION.md)**
 
-### Navigation
-- Sticky navbar with scroll effects
-- Mobile hamburger menu with full-screen overlay
-- Smooth scroll navigation
-
-### Hero Section
-- Full viewport height with split design
-- Floating stats cards
-- Call-to-action buttons
-
-### Certification Types
-- Three certification paths (Buildings, Portfolios, Businesses)
-- Hover effects and animations
-- Responsive grid layout
-
-### Process Timeline
-- Three-phase certification process
-- Desktop horizontal timeline
-- Mobile vertical timeline
-- Progress indicators
-
-### Feature Showcase
-- Alternating layout design
-- Incremental recognition feature
-- Global standards framework
-
-### Platform Features
-- Four key platform features
-- Data-driven dashboard
-- Expert network access
-- Best practices library
-- Secure & scalable infrastructure
-
-### Case Study
-- Real organization success story
-- Achievement highlights
-- Visual progress timeline
-
-### Why Choose Us
-- Four key differentiators
-- Trust indicators and stats
-- Global standards compliance
-
-### CTA Section
-- Contact form with validation
-- Success state handling
-- Alternative contact methods
-
-### Footer
-- Four-column layout
-- Social media links
-- Contact information
-- Legal links
-
-## 🎨 Animation Features
-
-- **Scroll Animations**: Fade in and slide effects as sections enter viewport
-- **Hover Effects**: Card lifts, button scaling, link underlines
-- **Micro-interactions**: Form focus states, loading animations
-- **Page Transitions**: Smooth navigation between sections
-
-## ♿ Accessibility Features
-
-- Semantic HTML5 elements
-- ARIA labels and roles
-- Keyboard navigation support
-- Focus visible states
-- Color contrast compliance (WCAG AA)
-- Alt text for all images
-- Skip to content functionality
-
-## 📊 Performance Optimizations
-
-- Code splitting for components
-- Lazy loading for images
-- Optimized font loading
-- CSS transforms for GPU acceleration
-- Minimal bundle size
-- Fast loading times (< 3 seconds on 3G)
-
-## 🔧 Customization
-
-### Colors
-Update the color palette in `tailwind.config.js`:
-
-```javascript
-colors: {
-  primary: {
-    forest: '#0D3B2E',
-    emerald: '#10B981',
-  },
-  accent: {
-    gold: '#F59E0B',
-  },
-  // ... other colors
-}
-```
-
-### Typography
-Modify font families in `src/index.css`:
-
-```css
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
-```
-
-### Animations
-Customize animations in `tailwind.config.js`:
-
-```javascript
-animation: {
-  'fade-in': 'fadeIn 0.5s ease-in-out',
-  'slide-up': 'slideUp 0.5s ease-out',
-  // ... other animations
-}
-```
-
-## 📱 Mobile Features
-
-- **Hamburger Menu**: Full-screen overlay with smooth animations
-- **Touch-Friendly**: 44px minimum touch targets
-- **Responsive Typography**: Scaled font sizes for different screen sizes
-- **Optimized Layouts**: Single-column stacks on mobile
-- **Gesture Support**: Swipe and touch interactions
-
-## 🌐 Browser Support
-
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+Available documentation:
+- **[Master Documentation](./docs/MASTER_DOCUMENTATION.md)** - Complete development guide
+- **[Backend API Documentation](./docs/BACKEND_API_DOCUMENTATION.md)** - MongoDB integration guide
+- **[Color Guide](./docs/COLOR_GUIDE.md)** - Design system reference
+- **[Deployment Guide](./docs/DEPLOYMENT.md)** - Production deployment instructions
 
 ## 📞 Support
 
-For support or questions, please contact:
-- Email: hello@ecozerocertify.com
-- Phone: +1 (555) 012-3456
+For questions or issues:
+1. Check the master documentation first
+2. Review browser console for errors
+3. Clear localStorage if experiencing auth issues
+4. Ensure you're using the correct port (3001)
 
 ---
 
-Built with ❤️ for a sustainable future
+**Built with ❤️ for a sustainable future**
