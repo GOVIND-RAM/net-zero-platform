@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
 
 interface ProjectData {
   owner: string;
@@ -64,14 +65,6 @@ const OwnerInformationForm: React.FC<OwnerInformationFormProps> = ({
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleCharacteristicChange = (characteristic: string, checked: boolean) => {
-    setFormData(prev => ({
-      ...prev,
-      projectCharacteristics: checked
-        ? [...prev.projectCharacteristics, characteristic]
-        : prev.projectCharacteristics.filter(c => c !== characteristic)
-    }));
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -104,7 +97,7 @@ const OwnerInformationForm: React.FC<OwnerInformationFormProps> = ({
             className="owner-information-form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none"
           />
           <p className="owner-information-form-help-text text-sm text-slate-500 mt-1">
-            <a href="#" className="owner-information-form-help-link text-primary-emerald hover:underline">Click here to add new organization if not existing.</a>
+            <button type="button" className="owner-information-form-help-link text-primary-emerald hover:underline">Click here to add new organization if not existing.</button>
           </p>
         </div>
 
@@ -208,9 +201,9 @@ const OwnerInformationForm: React.FC<OwnerInformationFormProps> = ({
           <button
             type="button"
             onClick={onPrevious}
-            className="owner-information-form-previous-button px-6 py-3 text-slate-600 hover:text-slate-900 transition-colors font-medium"
+            className="owner-information-form-previous-button px-6 py-3 text-slate-600 hover:text-slate-900 transition-colors font-medium flex items-center"
           >
-            ← Previous
+            <ArrowLeft className="mr-2 h-4 w-4" /> Previous
           </button>
           <div className="owner-information-form-right-actions flex space-x-4">
             <button

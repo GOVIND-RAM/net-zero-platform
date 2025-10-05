@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, AlertCircle, FileText, Shield } from 'lucide-react';
+import { CheckCircle, AlertCircle, FileText, Shield, ArrowLeft } from 'lucide-react';
 
 interface ProjectData {
   name: string;
@@ -195,9 +195,9 @@ const ProjectAgreementPage: React.FC<ProjectAgreementPageProps> = ({
           <button
             type="button"
             onClick={onPrevious}
-            className="project-agreement-page-previous-button px-6 py-3 text-slate-600 hover:text-slate-900 transition-colors font-medium"
+            className="project-agreement-page-previous-button px-6 py-3 text-slate-600 hover:text-slate-900 transition-colors font-medium flex items-center"
           >
-            ← Previous
+            <ArrowLeft className="mr-2 h-4 w-4" /> Previous
           </button>
           <div className="project-agreement-page-right-actions flex space-x-4">
             <button

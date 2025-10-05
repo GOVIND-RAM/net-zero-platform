@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   ArrowLeft, 
+  ArrowRight,
   MapPin, 
   Droplets, 
   Zap, 
@@ -12,7 +13,16 @@ import {
   Globe,
   FileText,
   Settings,
-  Save
+  Save,
+  Building2,
+  Calendar,
+  MapPin as MapPinIcon,
+  Upload,
+  Info,
+  CheckCircle,
+  AlertCircle,
+  EyeOff,
+  Navigation
 } from 'lucide-react';
 import QuestionnairePage from './QuestionnairePage';
 import { ProjectProvider } from '../../context/ProjectContext';
@@ -130,224 +140,418 @@ const ProjectDashboardPage: React.FC = () => {
     switch (activeTab) {
       case 'basic-info':
         return (
-          <div className="project-dashboard-basic-info-section space-y-6">
-            <h3 className="project-dashboard-basic-info-title text-xl font-semibold text-slate-900 mb-4">Building Info</h3>
-            
-            <div className="project-dashboard-basic-info-grid grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="project-dashboard-form-field-group">
-                <label className="project-dashboard-form-label block text-sm font-medium text-slate-700 mb-2">
-                  Building/Space title
-                </label>
-                <input
-                  type="text"
-                  value={formData.buildingTitle}
-                  onChange={(e) => handleInputChange('buildingTitle', e.target.value)}
-                  className="project-dashboard-form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none"
-                />
-              </div>
-              
-              <div className="project-dashboard-form-field-group">
-                <label className="project-dashboard-form-label block text-sm font-medium text-slate-700 mb-2">
-                  Building/Space occupancy category
-                  <span className="project-dashboard-form-label-info text-slate-400 ml-1">i</span>
-                </label>
-                <input
-                  type="text"
-                  value={formData.occupancyCategory}
-                  onChange={(e) => handleInputChange('occupancyCategory', e.target.value)}
-                  placeholder="Enter occupancy category"
-                  className="project-dashboard-form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none"
-                />
-              </div>
-              
-              <div className="project-dashboard-form-field-group">
-                <label className="project-dashboard-form-label block text-sm font-medium text-slate-700 mb-2">
-                  Gross building area/Gross space area
-                </label>
-                <div className="project-dashboard-form-input-group flex">
-                  <input
-                    type="number"
-                    value={formData.grossFloorArea}
-                    onChange={(e) => handleInputChange('grossFloorArea', e.target.value)}
-                    className="project-dashboard-form-input project-dashboard-form-input-with-unit flex-1 px-4 py-3 border border-slate-300 rounded-l-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none"
-                  />
-                  <div className="project-dashboard-form-input-unit px-4 py-3 bg-slate-100 border border-l-0 border-slate-300 rounded-r-lg text-slate-600 font-medium">
-                    {formData.unitType === 'sqft' ? 'sq ft' : 'sq m'}
+          <div className="project-dashboard-basic-info-container space-y-8">
+            {/* Progress Header */}
+            <div className="project-dashboard-progress-header bg-gradient-to-r from-primary-emerald/10 to-primary-emerald/5 rounded-xl p-6 border border-primary-emerald/20">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="p-2 bg-primary-emerald/20 rounded-lg">
+                    <Building2 className="h-6 w-6 text-primary-emerald" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-slate-900">Project Basic Information</h2>
+                    <p className="text-slate-600">Complete your project details to proceed with certification</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm text-slate-600">Completion</div>
+                  <div className="text-2xl font-bold text-primary-emerald">
+                    {Math.round((Object.values(formData).filter(value => value && value.toString().trim() !== '').length / 15) * 100)}%
                   </div>
                 </div>
               </div>
-              
-              <div className="project-dashboard-form-field-group">
-                <label className="project-dashboard-form-label block text-sm font-medium text-slate-700 mb-2">
-                  Target certification area
-                </label>
-                <div className="project-dashboard-form-input-group flex">
-                  <input
-                    type="number"
-                    value={formData.targetCertificationArea}
-                    onChange={(e) => handleInputChange('targetCertificationArea', e.target.value)}
-                    placeholder="Enter target area"
-                    className="project-dashboard-form-input project-dashboard-form-input-with-unit flex-1 px-4 py-3 border border-slate-300 rounded-l-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none"
-                  />
-                  <div className="project-dashboard-form-input-unit px-4 py-3 bg-slate-100 border border-l-0 border-slate-300 rounded-r-lg text-slate-600 font-medium">
-                    {formData.unitType === 'sqft' ? 'sq ft' : 'sq m'}
-                  </div>
-                </div>
-              </div>
-              
-              <div className="project-dashboard-form-field-group">
-                <label className="project-dashboard-form-label block text-sm font-medium text-slate-700 mb-2">
-                  Geo location
-                </label>
-                <div className="project-dashboard-form-input-group flex">
-                  <input
-                    type="text"
-                    value={formData.geoLocation}
-                    onChange={(e) => handleInputChange('geoLocation', e.target.value)}
-                    placeholder="latitude, longitude i.e. 44.500000,-89.500000"
-                    className="project-dashboard-form-input project-dashboard-form-input-with-button flex-1 px-4 py-3 border border-slate-300 rounded-l-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none"
-                  />
-                  <button className="project-dashboard-form-geo-button px-4 py-3 bg-slate-100 border border-l-0 border-slate-300 rounded-r-lg hover:bg-slate-200 transition-colors">
-                    <MapPin className="project-dashboard-form-geo-icon h-5 w-5 text-slate-600" />
-                  </button>
-                </div>
+              <div className="mt-4 w-full bg-slate-200 rounded-full h-2">
+                <div 
+                  className="bg-primary-emerald h-2 rounded-full transition-all duration-500"
+                  style={{ width: `${(Object.values(formData).filter(value => value && value.toString().trim() !== '').length / 15) * 100}%` }}
+                ></div>
               </div>
             </div>
+
+            {/* Building Information Section */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="project-dashboard-section-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+            >
+              <div className="section-header bg-gradient-to-r from-slate-50 to-slate-100 px-6 py-4 border-b border-slate-200">
+                <div className="flex items-center space-x-3">
+                  <Building2 className="h-5 w-5 text-primary-emerald" />
+                  <h3 className="text-lg font-semibold text-slate-900">Building Information</h3>
+                  <div className="flex items-center space-x-1">
+                    {formData.buildingTitle && formData.occupancyCategory ? (
+                      <CheckCircle className="h-4 w-4 text-green-500" />
+                    ) : (
+                      <AlertCircle className="h-4 w-4 text-amber-500" />
+                    )}
+                  </div>
+                </div>
+                <p className="text-sm text-slate-600 mt-1">Essential details about your building or space</p>
+              </div>
+              
+              <div className="section-content p-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="block text-sm font-semibold text-slate-700">
+                      Building/Space Title *
+                      <Info className="inline h-3 w-3 ml-1 text-slate-400" />
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.buildingTitle}
+                      onChange={(e) => handleInputChange('buildingTitle', e.target.value)}
+                      placeholder="Enter building or space name"
+                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/20 outline-none transition-all duration-200 hover:border-slate-400"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="block text-sm font-semibold text-slate-700">
+                      Occupancy Category *
+                      <Info className="inline h-3 w-3 ml-1 text-slate-400" />
+                    </label>
+                    <select
+                      value={formData.occupancyCategory}
+                      onChange={(e) => handleInputChange('occupancyCategory', e.target.value)}
+                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/20 outline-none transition-all duration-200 hover:border-slate-400"
+                    >
+                      <option value="">Select occupancy category</option>
+                      <option value="Office">Office</option>
+                      <option value="Retail">Retail</option>
+                      <option value="Healthcare">Healthcare</option>
+                      <option value="Education">Education</option>
+                      <option value="Hospitality">Hospitality</option>
+                      <option value="Residential">Residential</option>
+                      <option value="Industrial">Industrial</option>
+                      <option value="Mixed-Use">Mixed-Use</option>
+                      <option value="Assembly">Assembly</option>
+                      <option value="Warehouse">Warehouse</option>
+                    </select>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="block text-sm font-semibold text-slate-700">
+                      Gross Building Area *
+                    </label>
+                    <div className="flex">
+                      <input
+                        type="number"
+                        value={formData.grossFloorArea}
+                        onChange={(e) => handleInputChange('grossFloorArea', e.target.value)}
+                        placeholder="Enter total area"
+                        className="flex-1 px-4 py-3 border border-slate-300 rounded-l-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/20 outline-none transition-all duration-200 hover:border-slate-400"
+                      />
+                      <div className="px-4 py-3 bg-slate-100 border border-l-0 border-slate-300 rounded-r-lg text-slate-700 font-medium flex items-center">
+                        {formData.unitType === 'sqft' ? 'sq ft' : 'sq m'}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="block text-sm font-semibold text-slate-700">
+                      Target Certification Area *
+                    </label>
+                    <div className="flex">
+                      <input
+                        type="number"
+                        value={formData.targetCertificationArea}
+                        onChange={(e) => handleInputChange('targetCertificationArea', e.target.value)}
+                        placeholder="Enter target area"
+                        className="flex-1 px-4 py-3 border border-slate-300 rounded-l-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/20 outline-none transition-all duration-200 hover:border-slate-400"
+                      />
+                      <div className="px-4 py-3 bg-slate-100 border border-l-0 border-slate-300 rounded-r-lg text-slate-700 font-medium flex items-center">
+                        {formData.unitType === 'sqft' ? 'sq ft' : 'sq m'}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Location Details Section */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="project-dashboard-section-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+            >
+              <div className="section-header bg-gradient-to-r from-slate-50 to-slate-100 px-6 py-4 border-b border-slate-200">
+                <div className="flex items-center space-x-3">
+                  <MapPinIcon className="h-5 w-5 text-primary-emerald" />
+                  <h3 className="text-lg font-semibold text-slate-900">Location Details</h3>
+                  <div className="flex items-center space-x-1">
+                    {formData.address1 && formData.city && formData.state ? (
+                      <CheckCircle className="h-4 w-4 text-green-500" />
+                    ) : (
+                      <AlertCircle className="h-4 w-4 text-amber-500" />
+                    )}
+                  </div>
+                </div>
+                <p className="text-sm text-slate-600 mt-1">Physical address and geographical coordinates</p>
+              </div>
+              
+              <div className="section-content p-6">
+                <div className="space-y-6">
+                  {/* Address Fields */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="lg:col-span-2 space-y-2">
+                      <label className="block text-sm font-semibold text-slate-700">
+                        Street Address *
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.address1}
+                        onChange={(e) => handleInputChange('address1', e.target.value)}
+                        placeholder="Enter street address"
+                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/20 outline-none transition-all duration-200 hover:border-slate-400"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-slate-700">
+                        Address Line 2
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.address2}
+                        onChange={(e) => handleInputChange('address2', e.target.value)}
+                        placeholder="Apartment, suite, etc."
+                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/20 outline-none transition-all duration-200 hover:border-slate-400"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-slate-700">
+                        Postal Code *
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.postalCode}
+                        onChange={(e) => handleInputChange('postalCode', e.target.value)}
+                        placeholder="Enter postal code"
+                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/20 outline-none transition-all duration-200 hover:border-slate-400"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-slate-700">
+                        City *
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.city}
+                        onChange={(e) => handleInputChange('city', e.target.value)}
+                        placeholder="Enter city"
+                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/20 outline-none transition-all duration-200 hover:border-slate-400"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-slate-700">
+                        State/Province *
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.state}
+                        onChange={(e) => handleInputChange('state', e.target.value)}
+                        placeholder="Enter state or province"
+                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/20 outline-none transition-all duration-200 hover:border-slate-400"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-slate-700">
+                        Country/Region *
+                      </label>
+                      <select
+                        value={formData.country}
+                        onChange={(e) => handleInputChange('country', e.target.value)}
+                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/20 outline-none transition-all duration-200 hover:border-slate-400"
+                      >
+                        <option value="">Select country</option>
+                        <option value="India">India</option>
+                        <option value="United States">United States</option>
+                        <option value="Canada">Canada</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Germany">Germany</option>
+                        <option value="France">France</option>
+                        <option value="Japan">Japan</option>
+                        <option value="China">China</option>
+                        <option value="Brazil">Brazil</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  {/* Geo Location */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-semibold text-slate-700">
+                      Geographic Coordinates
+                      <Info className="inline h-3 w-3 ml-1 text-slate-400" />
+                    </label>
+                    <div className="flex">
+                      <input
+                        type="text"
+                        value={formData.geoLocation}
+                        onChange={(e) => handleInputChange('geoLocation', e.target.value)}
+                        placeholder="latitude, longitude (e.g., 44.500000,-89.500000)"
+                        className="flex-1 px-4 py-3 border border-slate-300 rounded-l-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/20 outline-none transition-all duration-200 hover:border-slate-400"
+                      />
+                      <button className="px-4 py-3 bg-primary-emerald text-white border border-primary-emerald rounded-r-lg hover:bg-primary-emerald/90 transition-colors flex items-center">
+                        <Navigation className="h-4 w-4 mr-2" />
+                        Locate
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Project Settings Section */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="project-dashboard-section-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+            >
+              <div className="section-header bg-gradient-to-r from-slate-50 to-slate-100 px-6 py-4 border-b border-slate-200">
+                <div className="flex items-center space-x-3">
+                  <Settings className="h-5 w-5 text-primary-emerald" />
+                  <h3 className="text-lg font-semibold text-slate-900">Project Settings</h3>
+                  <div className="flex items-center space-x-1">
+                    {formData.startDateBuilding && formData.buildingPartOf ? (
+                      <CheckCircle className="h-4 w-4 text-green-500" />
+                    ) : (
+                      <AlertCircle className="h-4 w-4 text-amber-500" />
+                    )}
+                  </div>
+                </div>
+                <p className="text-sm text-slate-600 mt-1">Timeline and project configuration</p>
+              </div>
+              
+              <div className="section-content p-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="block text-sm font-semibold text-slate-700">
+                      Project Start Date *
+                      <Calendar className="inline h-3 w-3 ml-1 text-slate-400" />
+                    </label>
+                    <input
+                      type="date"
+                      value={formData.startDateBuilding}
+                      onChange={(e) => handleInputChange('startDateBuilding', e.target.value)}
+                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/20 outline-none transition-all duration-200 hover:border-slate-400"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="block text-sm font-semibold text-slate-700">
+                      Building is Part Of
+                      <Info className="inline h-3 w-3 ml-1 text-slate-400" />
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.buildingPartOf}
+                      onChange={(e) => handleInputChange('buildingPartOf', e.target.value)}
+                      placeholder="e.g., Campus, Complex, Development"
+                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/20 outline-none transition-all duration-200 hover:border-slate-400"
+                    />
+                  </div>
+                  
+                  <div className="lg:col-span-2 space-y-2">
+                    <label className="block text-sm font-semibold text-slate-700">
+                      Data Confidentiality
+                      <Info className="inline h-3 w-3 ml-1 text-slate-400" />
+                    </label>
+                    <div className="flex space-x-4">
+                      <label className="flex items-center cursor-pointer">
+                        <input
+                          type="radio"
+                          name="confidentialData"
+                          value="No"
+                          checked={formData.confidentialData === 'No'}
+                          onChange={(e) => handleInputChange('confidentialData', e.target.value)}
+                          className="h-4 w-4 text-primary-emerald focus:ring-primary-emerald border-slate-300"
+                        />
+                        <span className="ml-2 text-slate-700">Public</span>
+                      </label>
+                      <label className="flex items-center cursor-pointer">
+                        <input
+                          type="radio"
+                          name="confidentialData"
+                          value="Yes"
+                          checked={formData.confidentialData === 'Yes'}
+                          onChange={(e) => handleInputChange('confidentialData', e.target.value)}
+                          className="h-4 w-4 text-primary-emerald focus:ring-primary-emerald border-slate-300"
+                        />
+                        <span className="ml-2 text-slate-700">Confidential</span>
+                        <EyeOff className="h-3 w-3 ml-1 text-slate-400" />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Media Upload Section */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="project-dashboard-section-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+            >
+              <div className="section-header bg-gradient-to-r from-slate-50 to-slate-100 px-6 py-4 border-b border-slate-200">
+                <div className="flex items-center space-x-3">
+                  <Upload className="h-5 w-5 text-primary-emerald" />
+                  <h3 className="text-lg font-semibold text-slate-900">Project Media</h3>
+                  <div className="flex items-center space-x-1">
+                    <AlertCircle className="h-4 w-4 text-amber-500" />
+                  </div>
+                </div>
+                <p className="text-sm text-slate-600 mt-1">Upload photos and videos of your building or space</p>
+              </div>
+              
+              <div className="section-content p-6">
+                <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 text-center hover:border-primary-emerald/50 transition-colors cursor-pointer">
+                  <Upload className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                  <h4 className="text-lg font-semibold text-slate-900 mb-2">Upload Media Files</h4>
+                  <p className="text-slate-600 mb-4">Drag and drop files here, or click to browse</p>
+                  <button className="px-6 py-3 bg-primary-emerald text-white rounded-lg hover:bg-primary-emerald/90 transition-colors font-medium">
+                    Choose Files
+                  </button>
+                  <p className="text-xs text-slate-500 mt-2">Supports: JPG, PNG, MP4, MOV (Max 10MB each)</p>
+                </div>
+              </div>
+            </motion.div>
             
-            <div className="project-dashboard-address-grid grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="project-dashboard-form-field-group">
-                <label className="project-dashboard-form-label block text-sm font-medium text-slate-700 mb-2">
-                  Address 1
-                </label>
-                <input
-                  type="text"
-                  value={formData.address1}
-                  onChange={(e) => handleInputChange('address1', e.target.value)}
-                  className="project-dashboard-form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none"
-                />
+            {/* Action Buttons */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="flex justify-between items-center pt-6 border-t border-slate-200"
+            >
+              <div className="flex items-center space-x-2 text-sm text-slate-600">
+                <Info className="h-4 w-4" />
+                <span>All changes are automatically saved</span>
               </div>
-              
-              <div className="project-dashboard-form-field-group">
-                <label className="project-dashboard-form-label block text-sm font-medium text-slate-700 mb-2">
-                  Address 2
-                </label>
-                <input
-                  type="text"
-                  value={formData.address2}
-                  onChange={(e) => handleInputChange('address2', e.target.value)}
-                  className="project-dashboard-form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none"
-                />
-              </div>
-              
-              <div className="project-dashboard-form-field-group">
-                <label className="project-dashboard-form-label block text-sm font-medium text-slate-700 mb-2">
-                  City
-                </label>
-                <input
-                  type="text"
-                  value={formData.city}
-                  onChange={(e) => handleInputChange('city', e.target.value)}
-                  className="project-dashboard-form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none"
-                />
-              </div>
-              
-              <div className="project-dashboard-form-field-group">
-                <label className="project-dashboard-form-label block text-sm font-medium text-slate-700 mb-2">
-                  State
-                </label>
-                <input
-                  type="text"
-                  value={formData.state}
-                  onChange={(e) => handleInputChange('state', e.target.value)}
-                  className="project-dashboard-form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none"
-                />
-              </div>
-              
-              <div className="project-dashboard-form-field-group">
-                <label className="project-dashboard-form-label block text-sm font-medium text-slate-700 mb-2">
-                  Country/Region
-                </label>
-                <select
-                  value={formData.country}
-                  onChange={(e) => handleInputChange('country', e.target.value)}
-                  className="project-dashboard-form-select w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none"
+              <div className="flex space-x-4">
+                <button
+                  onClick={handleSave}
+                  className="flex items-center space-x-2 px-6 py-3 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium"
                 >
-                  <option value="India">India</option>
-                </select>
-              </div>
-              
-              <div className="project-dashboard-form-field-group">
-                <label className="project-dashboard-form-label block text-sm font-medium text-slate-700 mb-2">
-                  Postal code
-                </label>
-                <input
-                  type="text"
-                  value={formData.postalCode}
-                  onChange={(e) => handleInputChange('postalCode', e.target.value)}
-                  className="project-dashboard-form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none"
-                />
-              </div>
-              
-              <div className="project-dashboard-form-field-group">
-                <label className="project-dashboard-form-label block text-sm font-medium text-slate-700 mb-2">
-                  Start date
-                </label>
-                <input
-                  type="text"
-                  value={formData.startDateBuilding}
-                  onChange={(e) => handleInputChange('startDateBuilding', e.target.value)}
-                  placeholder="mm/dd/yyyy"
-                  className="project-dashboard-form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none"
-                />
-              </div>
-              
-              <div className="project-dashboard-form-field-group">
-                <label className="project-dashboard-form-label block text-sm font-medium text-slate-700 mb-2">
-                  This building is part of
-                  <span className="project-dashboard-form-label-info text-slate-400 ml-1">i</span>
-                </label>
-                <input
-                  type="text"
-                  value={formData.buildingPartOf}
-                  onChange={(e) => handleInputChange('buildingPartOf', e.target.value)}
-                  className="project-dashboard-form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none"
-                />
-              </div>
-              
-              <div className="project-dashboard-form-field-group">
-                <label className="project-dashboard-form-label block text-sm font-medium text-slate-700 mb-2">
-                  Do you wish to keep your project data submissions confidential?
-                </label>
-                <select
-                  value={formData.confidentialData}
-                  onChange={(e) => handleInputChange('confidentialData', e.target.value)}
-                  className="project-dashboard-form-select w-full px-4 py-3 border border-slate-300 rounded-lg focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none"
+                  <Save className="h-4 w-4" />
+                  <span>Save Draft</span>
+                </button>
+                <button
+                  onClick={handleSaveAndNext}
+                  className="flex items-center space-x-2 px-6 py-3 bg-primary-emerald text-white rounded-lg hover:bg-primary-emerald/90 transition-colors font-medium"
                 >
-                  <option value="No">No</option>
-                  <option value="Yes">Yes</option>
-                </select>
-              </div>
-              
-              <div className="project-dashboard-form-field-group">
-                <label className="project-dashboard-form-label block text-sm font-medium text-slate-700 mb-2">
-                  Please upload photographs and videos of your building/space.
-                  <span className="project-dashboard-form-label-info text-slate-400 ml-1">i</span>
-                </label>
-                <button className="project-dashboard-form-upload-button w-full px-4 py-3 border border-primary-emerald text-primary-emerald rounded-lg hover:bg-primary-emerald/10 transition-colors">
-                  View/Upload
+                  <span>Continue to Next Section</span>
+                  <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
-            </div>
-            
-            <div className="project-dashboard-form-actions flex justify-end pt-6 border-t border-slate-200">
-              <button
-                onClick={handleSave}
-                className="project-dashboard-form-save-button flex items-center space-x-2 px-6 py-3 bg-primary-emerald text-white rounded-lg hover:bg-primary-emerald/90 transition-colors font-medium"
-              >
-                <Save className="project-dashboard-form-save-icon h-4 w-4" />
-                <span>Save</span>
-              </button>
-            </div>
+            </motion.div>
           </div>
         );
       

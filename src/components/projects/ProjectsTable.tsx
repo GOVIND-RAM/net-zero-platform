@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Project } from '../../services/mockData';
 import ProjectStatusBadge from './ProjectStatusBadge';
-import { Search, MoreHorizontal, Eye, Edit, Trash2 } from 'lucide-react';
+import { Search, Eye, Edit, Trash2 } from 'lucide-react';
 
 interface ProjectsTableProps {
   projects: Project[];

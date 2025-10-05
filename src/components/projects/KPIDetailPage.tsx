@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, CheckCircle, XCircle, AlertCircle, Info } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Info } from 'lucide-react';
 
 interface ProjectData {
   name: string;
@@ -526,16 +526,20 @@ const KPIDetailPage: React.FC = () => {
             <button
               onClick={handlePrevious}
               disabled={currentQuestionIndex === 0}
-              className="kpi-detail-page-previous-button px-6 py-3 text-slate-600 hover:text-slate-900 transition-colors font-medium disabled:text-slate-400 disabled:cursor-not-allowed"
+              className="kpi-detail-page-previous-button px-6 py-3 text-slate-600 hover:text-slate-900 transition-colors font-medium disabled:text-slate-400 disabled:cursor-not-allowed flex items-center"
             >
-              ← Previous
+              <ArrowLeft className="mr-2 h-4 w-4" /> Previous
             </button>
             
             <button
               onClick={handleNext}
-              className="kpi-detail-page-next-button px-8 py-3 bg-primary-emerald text-white rounded-lg hover:bg-primary-emerald/90 transition-colors font-medium"
+              className="kpi-detail-page-next-button px-8 py-3 bg-primary-emerald text-white rounded-lg hover:bg-primary-emerald/90 transition-colors font-medium flex items-center"
             >
-              {currentQuestionIndex === totalQuestions - 1 ? 'Complete' : 'Next →'}
+              {currentQuestionIndex === totalQuestions - 1 ? 'Complete' : (
+                <>
+                  Next <ArrowRight className="ml-1 h-4 w-4" />
+                </>
+              )}
             </button>
           </div>
         </motion.div>

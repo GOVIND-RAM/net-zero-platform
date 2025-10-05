@@ -9,9 +9,9 @@ import SignupPage from './components/authentication/SignupPage';
 import ForgotPasswordPage from './components/authentication/ForgotPasswordPage';
 import DashboardSelection from './components/dashboard/DashboardSelection';
 import ProjectsDashboardPage from './components/dashboard/ProjectsDashboardPage';
+import MyProjectsPage from './components/dashboard/MyProjectsPage';
 import NewProjectPage from './components/projects/NewProjectPage';
 import ProjectCreationPage from './components/projects/ProjectCreationPage';
-import ProjectOverviewPage from './components/projects/ProjectOverviewPage';
 import ProjectDashboardPage from './components/projects/ProjectDashboardPage';
 import KPIDetailPage from './components/projects/KPIDetailPage';
 
@@ -36,6 +36,16 @@ function App() {
               element={
                 <ProtectedRoute>
                   <DashboardSelection />
+                </ProtectedRoute>
+              }
+            />
+            
+            {/* My Projects Route */}
+            <Route
+              path="/dashboard/myprojects"
+              element={
+                <ProtectedRoute>
+                  <MyProjectsPage />
                 </ProtectedRoute>
               }
             />

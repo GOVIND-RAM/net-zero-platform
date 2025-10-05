@@ -1,13 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
 import { Save, ArrowRight, ArrowLeft } from 'lucide-react';
 import { questionnaireData } from '../../data/questionnaireData';
 import { 
-  QuestionnaireCategory, 
   QuestionResponse, 
-  FileUploadResponse, 
-  CategoryProgress,
-  ProjectQuestionnaireState 
+  FileUploadResponse
 } from '../../types';
 import KpiCard from './KpiCard';
 import ProgressSidebar from './ProgressSidebar';
@@ -26,8 +22,6 @@ const QuestionnairePage: React.FC<QuestionnairePageProps> = ({
   onSave, 
   onPrevious 
 }) => {
-  const { projectId } = useParams<{ projectId: string }>();
-  const location = useLocation();
   const [activeTab, setActiveTab] = useState<string>(categoryId || 'integrative-process');
   
   // Use ProjectContext for state management
@@ -35,7 +29,6 @@ const QuestionnairePage: React.FC<QuestionnairePageProps> = ({
     responses,
     uploads,
     lastSaved,
-    isDirty,
     isSaving,
     addResponse,
     addUpload,

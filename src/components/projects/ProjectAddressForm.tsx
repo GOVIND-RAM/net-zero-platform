@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin } from 'lucide-react';
+import { MapPin, ArrowLeft } from 'lucide-react';
 
 interface ProjectData {
   address1: string;
@@ -206,9 +206,9 @@ const ProjectAddressForm: React.FC<ProjectAddressFormProps> = ({
           <button
             type="button"
             onClick={onPrevious}
-            className="project-address-form-previous-button px-6 py-3 text-slate-600 hover:text-slate-900 transition-colors font-medium"
+            className="project-address-form-previous-button px-6 py-3 text-slate-600 hover:text-slate-900 transition-colors font-medium flex items-center"
           >
-            ← Previous
+            <ArrowLeft className="mr-2 h-4 w-4" /> Previous
           </button>
           <div className="project-address-form-right-actions flex space-x-4">
             <button

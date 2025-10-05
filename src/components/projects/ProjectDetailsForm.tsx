@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Lightbulb, Calendar, Ruler, ArrowRight } from 'lucide-react';
 
 interface ProjectData {
   name: string;
@@ -139,8 +140,8 @@ const ProjectDetailsForm: React.FC<ProjectDetailsFormProps> = ({
               ))}
             </select>
             <p className="project-details-form-help-text text-sm text-slate-500 mt-3 flex items-center">
-              <span className="mr-1">💡</span>
-              Looking for CertifyPro v4 ND registration? <a href="#" className="project-details-form-help-link text-primary-emerald hover:underline font-medium ml-1">Email CertifyPro</a> for details.
+              <Lightbulb className="mr-2 h-4 w-4 text-amber-500" />
+              Looking for CertifyPro v4 ND registration? <button type="button" className="project-details-form-help-link text-primary-emerald hover:underline font-medium ml-1">Email CertifyPro</button> for details.
             </p>
           </div>
 
@@ -188,7 +189,7 @@ const ProjectDetailsForm: React.FC<ProjectDetailsFormProps> = ({
                 className="project-details-form-date-input w-full px-4 py-4 border border-slate-300 rounded-xl focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none font-medium transition-all duration-200 hover:border-slate-400"
               />
               <p className="project-details-form-help-text text-sm text-slate-500 mt-3 flex items-center">
-                <span className="mr-1">📅</span>
+                <Calendar className="mr-2 h-4 w-4 text-blue-500" />
                 Anticipated development start
               </p>
             </div>
@@ -205,7 +206,7 @@ const ProjectDetailsForm: React.FC<ProjectDetailsFormProps> = ({
                 className="project-details-form-date-input w-full px-4 py-4 border border-slate-300 rounded-xl focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none font-medium transition-all duration-200 hover:border-slate-400"
               />
               <p className="project-details-form-help-text text-sm text-slate-500 mt-3 flex items-center">
-                <span className="mr-1">📅</span>
+                <Calendar className="mr-2 h-4 w-4 text-blue-500" />
                 Anticipated development end
               </p>
             </div>
@@ -250,7 +251,7 @@ const ProjectDetailsForm: React.FC<ProjectDetailsFormProps> = ({
                 </div>
               </div>
               <p className="project-details-form-help-text text-sm text-slate-500 mt-3 flex items-center">
-                <span className="mr-1">📐</span>
+                <Ruler className="mr-2 h-4 w-4 text-green-500" />
                 Used to calculate review fees and is the basis for several CertifyPro credits.
               </p>
             </div>
@@ -267,9 +268,9 @@ const ProjectDetailsForm: React.FC<ProjectDetailsFormProps> = ({
             </button>
             <button
               type="submit"
-              className="project-details-form-continue-button px-8 py-4 bg-gradient-to-r from-primary-emerald to-primary-emerald/90 text-white rounded-xl hover:from-primary-emerald/90 hover:to-primary-emerald/80 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              className="project-details-form-continue-button px-8 py-4 bg-gradient-to-r from-primary-emerald to-primary-emerald/90 text-white rounded-xl hover:from-primary-emerald/90 hover:to-primary-emerald/80 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center"
             >
-              Continue →
+              Continue <ArrowRight className="ml-2 h-4 w-4" />
             </button>
           </div>
         </form>

@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   ArrowLeft, 
+  ArrowRight,
   MapPin, 
   Droplets, 
   Zap, 
@@ -294,7 +295,7 @@ const ProjectOverviewPage: React.FC = () => {
                     </p>
                     
                     <div className="project-overview-page-kpi-category-card-action flex items-center text-primary-emerald font-medium text-sm group-hover:text-primary-emerald/80">
-                      View Details →
+                      View Details <ArrowRight className="ml-1 h-4 w-4" />
                     </div>
                   </motion.div>
                 ))}

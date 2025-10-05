@@ -92,9 +92,9 @@ const ProjectRegistrationForm: React.FC<ProjectRegistrationFormProps> = ({
           <ChevronDown className="project-registration-form-select-arrow absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
         </div>
         <p className="project-registration-form-help-text mt-2 text-sm text-gray-600">
-          <a href="#" className="project-registration-form-help-link text-primary-emerald hover:text-primary-forest font-medium transition-colors">
+          <button type="button" className="project-registration-form-help-link text-primary-emerald hover:text-primary-forest font-medium transition-colors">
             Click here to add new organization
-          </a>
+          </button>
         </p>
       </div>
 
