@@ -47,6 +47,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         setUploadProgress(prev => {
           if (prev >= 100) {
             clearInterval(progressInterval);
+            // Ensure the file is properly saved
             onFileUpload(upload.id, file);
             return 100;
           }

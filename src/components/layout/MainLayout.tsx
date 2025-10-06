@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import { 
   Award, 
   Home, 
   Building, 
   FileText, 
   Users, 
-  Settings,
   LogOut,
   ChevronLeft,
   Menu,
@@ -27,7 +27,9 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { certificationType } = useParams<{ certificationType: string }>();
+  const { logout, authState } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const getCertificationTypeDisplay = (type: string) => {
@@ -88,8 +90,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   }
 
   const handleLogout = () => {
-    // TODO: Implement logout functionality
-    console.log('Logout clicked');
+    logout();
+    navigate('/login');
   };
 
   return (
@@ -108,7 +110,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       } hidden md:block`}>
         <div className="sidebar-content flex flex-col h-full">
           {/* Logo */}
-          <div className={`sidebar-header flex items-center ${isSidebarOpen ? 'justify-between' : 'justify-center'} px-4 py-3 border-b border-slate-200`}>
+          <div className={`sidebar-header flex items-center px-4 py-3 border-b border-slate-200 ${
+            isSidebarOpen ? 'justify-start' : 'justify-center'
+          }`}>
             <div className="sidebar-logo flex items-center">
               <div className="sidebar-logo-icon bg-primary-emerald p-1.5 rounded-lg">
                 <Award className="h-5 w-5 text-white" />
@@ -117,18 +121,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 <span className="ml-3 text-lg font-bold text-slate-900">EcoZero Certify</span>
               )}
             </div>
-            {/* Sidebar Toggle Button in Sidebar */}
-            <button
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="p-2 text-gray-600 hover:text-primary-emerald hover:bg-gray-100 rounded border border-gray-200 hover:border-primary-emerald transition-colors"
-              title={isSidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
-            >
-              {isSidebarOpen ? (
-                <ChevronLeft className="h-4 w-4" />
-              ) : (
-                <Menu className="h-4 w-4" />
-              )}
-            </button>
           </div>
 
           {/* Navigation */}
@@ -139,15 +131,19 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+                  className={`flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 group ${
                     item.current
                       ? 'text-primary-emerald bg-primary-emerald/10'
                       : 'text-gray-700 hover:text-primary-emerald hover:bg-gray-100'
                   }`}
                   title={!isSidebarOpen ? item.name : undefined}
                 >
-                  <Icon className={`h-6 w-6 ${isSidebarOpen ? 'mr-3' : 'mx-auto'}`} />
-                  {isSidebarOpen && item.name}
+                  <Icon className={`h-5 w-5 flex-shrink-0 transition-all duration-200 ${
+                    isSidebarOpen ? 'mr-3' : 'mx-auto'
+                  }`} />
+                  {isSidebarOpen && (
+                    <span className="truncate transition-opacity duration-200">{item.name}</span>
+                  )}
                 </Link>
               );
             })}
@@ -158,36 +154,64 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             {isSidebarOpen ? (
               <>
                 <div className="sidebar-user-info flex items-center mb-3">
-                  <div className="sidebar-user-avatar w-8 h-8 bg-primary-emerald rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-semibold">U</span>
+                  <div className="sidebar-user-avatar w-8 h-8 bg-primary-emerald rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-sm font-semibold">
+                      {authState.user?.name?.charAt(0).toUpperCase() || 'U'}
+                    </span>
                   </div>
-                  <div className="sidebar-user-details ml-3">
-                    <p className="text-sm font-medium text-gray-900">User Name</p>
-                    <p className="text-xs text-gray-500">user@example.com</p>
+                  <div className="sidebar-user-details ml-3 min-w-0">
+                    <p className="text-sm font-medium text-gray-900 truncate">
+                      {authState.user?.name || 'User Name'}
+                    </p>
+                    <p className="text-xs text-gray-500 truncate">
+                      {authState.user?.email || 'user@example.com'}
+                    </p>
                   </div>
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  className="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200"
                 >
-                  <LogOut className="mr-3 h-5 w-5" />
-                  Logout
+                  <LogOut className="mr-3 h-5 w-5 flex-shrink-0" />
+                  <span className="truncate">Logout</span>
                 </button>
               </>
             ) : (
               <div className="sidebar-user-collapsed flex flex-col items-center space-y-3">
                 <div className="sidebar-user-avatar-collapsed w-8 h-8 bg-primary-emerald rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-semibold">U</span>
+                  <span className="text-white text-sm font-semibold">
+                    {authState.user?.name?.charAt(0).toUpperCase() || 'U'}
+                  </span>
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="p-2 text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  className="p-2 text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200"
                   title="Logout"
                 >
-                  <LogOut className="h-6 w-6" />
+                  <LogOut className="h-5 w-5" />
                 </button>
               </div>
             )}
+          </div>
+
+          {/* Sidebar Toggle Button - Bottom */}
+          <div className="sidebar-toggle-section px-3 py-3 border-t border-slate-200">
+            <button
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className={`w-full flex items-center justify-center px-3 py-2 text-sm text-gray-600 hover:text-primary-emerald hover:bg-gray-100 rounded-lg transition-all duration-200 ${
+                isSidebarOpen ? 'justify-start' : 'justify-center'
+              }`}
+              title={isSidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+            >
+              {isSidebarOpen ? (
+                <>
+                  <ChevronLeft className="h-4 w-4 mr-2" />
+                  <span>Collapse</span>
+                </>
+              ) : (
+                <Menu className="h-4 w-4" />
+              )}
+            </button>
           </div>
         </div>
       </div>
@@ -277,11 +301,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               <h1 className="text-lg lg:text-2xl font-bold text-neutral-charcoal truncate">
                 {certificationType ? `${certificationType.charAt(0).toUpperCase() + certificationType.slice(1)} Projects` : 'Dashboard'}
               </h1>
-            </div>
-            <div className="top-navbar-right flex items-center space-x-2">
-              <button className="text-gray-600 hover:text-primary-emerald transition-colors p-1.5">
-                <Settings className="h-5 w-5" />
-              </button>
             </div>
           </div>
         </div>

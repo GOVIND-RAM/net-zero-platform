@@ -14,6 +14,7 @@ import NewProjectPage from './components/projects/NewProjectPage';
 import ProjectCreationPage from './components/projects/ProjectCreationPage';
 import ProjectDashboardPage from './components/projects/ProjectDashboardPage';
 import KPIDetailPage from './components/projects/KPIDetailPage';
+import BuildingTypeSelection from './components/projects/BuildingTypeSelection';
 
 // Components
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -65,6 +66,16 @@ function App() {
               element={
                 <ProtectedRoute>
                   <NewProjectPage />
+                </ProtectedRoute>
+              }
+            />
+            
+            {/* Building Type Selection */}
+            <Route
+              path="/project/select-type"
+              element={
+                <ProtectedRoute>
+                  <BuildingTypeSelection />
                 </ProtectedRoute>
               }
             />

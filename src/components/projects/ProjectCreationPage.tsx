@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProjectDetailsForm from './ProjectDetailsForm';
@@ -39,6 +39,30 @@ interface ProjectData {
 
 const ProjectCreationPage: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Map dashboard certification types to building type names
+  const getBuildingTypeName = (certificationType: string) => {
+    const typeMap: { [key: string]: string } = {
+      'building': 'Building',
+      'portfolio': 'Portfolio', 
+      'home': 'Home',
+      'community-center': 'Township',
+      'campus': 'Campus',
+      'warehouse': 'Factory',
+      'community': 'Smart Cities',
+      'city': 'Cities',
+      'business': 'Business',
+      'product': 'Product',
+      'process': 'Process',
+      'fleet': 'Fleet',
+      'supply-chain': 'Supply Chain'
+    };
+    return typeMap[certificationType] || 'Building';
+  };
+  
+  const buildingType = location.state?.buildingType || 'building';
+  const buildingTypeName = getBuildingTypeName(buildingType);
   const [currentStep, setCurrentStep] = useState(1);
   const [projectData, setProjectData] = useState<ProjectData>({
     name: '',
@@ -83,7 +107,7 @@ const ProjectCreationPage: React.FC = () => {
 
   const handleSubmit = () => {
     // Navigate to project dashboard with tabbed interface
-    navigate('/project/dashboard', { state: { projectData } });
+    navigate('/project/dashboard', { state: { projectData, buildingType: buildingTypeName } });
   };
 
   const handleCancel = () => {
@@ -94,11 +118,12 @@ const ProjectCreationPage: React.FC = () => {
     switch (currentStep) {
       case 1:
         return (
-          <ProjectDetailsForm
-            data={projectData}
-            onNext={handleNext}
-            onCancel={handleCancel}
-          />
+        <ProjectDetailsForm
+          data={projectData}
+          onNext={handleNext}
+          onCancel={handleCancel}
+          buildingType={buildingTypeName}
+        />
         );
       case 2:
         return (

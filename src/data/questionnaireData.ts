@@ -27,7 +27,7 @@ export const questionnaireData: QuestionnaireCategory[] = [
             description: 'Select when the multidisciplinary team was first brought together'
           },
           {
-            id: 'energy-modeling-approach',
+            id: 'integrative-energy-modeling-approach',
             label: 'What energy modeling approach is being used?',
             type: 'dropdown',
             options: [
@@ -442,7 +442,7 @@ export const questionnaireData: QuestionnaireCategory[] = [
         maxPoints: 4,
         questions: [
           {
-            id: 'energy-modeling-approach',
+            id: 'energy-atmosphere-modeling-approach',
             label: 'What energy modeling approach is being used?',
             type: 'dropdown',
             options: [

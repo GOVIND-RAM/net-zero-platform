@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { QuestionnaireKpi, QuestionResponse, FileUploadResponse } from '../../types';
 import FileUpload from '../common/FileUpload';
 

@@ -118,7 +118,9 @@ const MyProjectsPage: React.FC = () => {
                          project.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          project.certification.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus = statusFilter === 'all' || project.status === statusFilter;
-    return matchesSearch && matchesStatus;
+    // Only show completed and active projects
+    const isActiveOrCompleted = project.status === 'active' || project.status === 'completed';
+    return matchesSearch && matchesStatus && isActiveOrCompleted;
   });
 
   const handleViewProject = (projectId: string) => {
@@ -130,7 +132,7 @@ const MyProjectsPage: React.FC = () => {
   };
 
   const handleNewProject = () => {
-    navigate('/project/create');
+    navigate('/project/select-type');
   };
 
   return (
@@ -176,12 +178,12 @@ const MyProjectsPage: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           {/* Stats Overview */}
-          <div className="my-projects-stats grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div className="my-projects-stats grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <div className="my-projects-stat-card bg-white rounded-xl p-6 border border-slate-200">
               <div className="my-projects-stat-content flex items-center justify-between">
                 <div className="my-projects-stat-info">
                   <p className="my-projects-stat-label text-sm text-slate-600">Total Projects</p>
-                  <p className="my-projects-stat-value text-2xl font-bold text-slate-900">{projects.length}</p>
+                  <p className="my-projects-stat-value text-2xl font-bold text-slate-900">{filteredProjects.length}</p>
                 </div>
                 <FolderOpen className="my-projects-stat-icon h-8 w-8 text-primary-emerald" />
               </div>
@@ -192,7 +194,7 @@ const MyProjectsPage: React.FC = () => {
                 <div className="my-projects-stat-info">
                   <p className="my-projects-stat-label text-sm text-slate-600">Active</p>
                   <p className="my-projects-stat-value text-2xl font-bold text-green-600">
-                    {projects.filter(p => p.status === 'active').length}
+                    {filteredProjects.filter(p => p.status === 'active').length}
                   </p>
                 </div>
                 <Clock className="my-projects-stat-icon h-8 w-8 text-green-600" />
@@ -204,22 +206,10 @@ const MyProjectsPage: React.FC = () => {
                 <div className="my-projects-stat-info">
                   <p className="my-projects-stat-label text-sm text-slate-600">Completed</p>
                   <p className="my-projects-stat-value text-2xl font-bold text-blue-600">
-                    {projects.filter(p => p.status === 'completed').length}
+                    {filteredProjects.filter(p => p.status === 'completed').length}
                   </p>
                 </div>
                 <CheckCircle className="my-projects-stat-icon h-8 w-8 text-blue-600" />
-              </div>
-            </div>
-            
-            <div className="my-projects-stat-card bg-white rounded-xl p-6 border border-slate-200">
-              <div className="my-projects-stat-content flex items-center justify-between">
-                <div className="my-projects-stat-info">
-                  <p className="my-projects-stat-label text-sm text-slate-600">Avg Progress</p>
-                  <p className="my-projects-stat-value text-2xl font-bold text-slate-900">
-                    {Math.round(projects.reduce((acc, p) => acc + p.progress, 0) / projects.length)}%
-                  </p>
-                </div>
-                <AlertCircle className="my-projects-stat-icon h-8 w-8 text-slate-600" />
               </div>
             </div>
           </div>
@@ -250,8 +240,6 @@ const MyProjectsPage: React.FC = () => {
                   <option value="all">All Status</option>
                   <option value="active">Active</option>
                   <option value="completed">Completed</option>
-                  <option value="on-hold">On Hold</option>
-                  <option value="pending">Pending</option>
                 </select>
               </div>
             </div>

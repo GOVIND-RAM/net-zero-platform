@@ -27,8 +27,8 @@ interface ProjectContextType {
   calculateOverallProgress: () => number;
   getCategoryProgresses: () => CategoryProgress[];
   
-  // Auto-save
-  autoSave: () => Promise<void>;
+  // Manual save
+  saveProjectData: () => Promise<void>;
   
   // Data management
   clearAllData: () => void;
@@ -62,16 +62,22 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
           setResponses(parsedState.responses || []);
           setUploads(parsedState.uploads || []);
           setLastSaved(parsedState.lastSaved || '');
+          console.log(`Loaded saved data for project ${projectId}:`, {
+            responses: parsedState.responses?.length || 0,
+            uploads: parsedState.uploads?.length || 0
+          });
         } catch (error) {
           console.error('Failed to load saved state:', error);
         }
+      } else {
+        console.log(`No saved data found for project ${projectId}`);
       }
     }
   }, [projectId]);
 
-  // Auto-save functionality
-  const autoSave = useCallback(async () => {
-    if (!isDirty || !projectId) return;
+  // Manual save functionality - only when Save/Save & Next buttons are clicked
+  const saveProjectData = useCallback(async () => {
+    if (!projectId) return;
 
     setIsSaving(true);
     try {
@@ -90,22 +96,18 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
       localStorage.setItem(`questionnaire_${projectId}`, JSON.stringify(state));
       setLastSaved(new Date().toISOString());
       setIsDirty(false);
+      console.log(`Saved project data for ${projectId}:`, {
+        responses: responses.length,
+        uploads: uploads.length
+      });
     } catch (error) {
-      console.error('Auto-save failed:', error);
+      console.error('Save failed:', error);
     } finally {
       setIsSaving(false);
     }
-  }, [projectId, responses, uploads, isDirty]);
+  }, [projectId, responses, uploads]);
 
-  // Auto-save when data changes
-  useEffect(() => {
-    if (isDirty) {
-      const timeoutId = setTimeout(autoSave, 2000); // Auto-save after 2 seconds of inactivity
-      return () => clearTimeout(timeoutId);
-    }
-  }, [autoSave, isDirty]);
-
-  // Response management
+  // Response management - manual save only
   const addResponse = useCallback((response: QuestionResponse) => {
     setResponses(prev => {
       const existingIndex = prev.findIndex(r => r.questionId === response.questionId);
@@ -125,7 +127,7 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
     setIsDirty(true);
   }, []);
 
-  // Upload management
+  // Upload management - manual save only
   const addUpload = useCallback((upload: FileUploadResponse) => {
     setUploads(prev => {
       const existingIndex = prev.findIndex(u => u.uploadId === upload.uploadId);
@@ -152,7 +154,7 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
     setIsDirty(true);
   }, []);
 
-  // Progress calculations
+  // Progress calculations - Category specific
   const calculateCategoryProgress = useCallback((categoryId: string): CategoryProgress => {
     const category = questionnaireData.find(cat => cat.id === categoryId);
     if (!category) {
@@ -163,6 +165,11 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
         overallProgress: 0
       };
     }
+
+    // Debug logging to help identify issues
+    // console.log(`Calculating progress for category: ${categoryId}`);
+    // console.log(`Current responses count: ${responses.length}`);
+    // console.log(`Current uploads count: ${uploads.length}`);
 
     const categoryKpis = category.kpis;
     const totalKpis = categoryKpis.length;
@@ -180,14 +187,24 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
       totalQuestions += kpiQuestions;
       totalUploads += kpiUploads;
 
-      // Check if KPI is complete
-      const kpiCompletedQuestions = responses.filter(r => 
-        kpi.questions.some(q => q.id === r.questionId && r.value !== '' && r.value !== null)
-      ).length;
+      // Count completed questions for this specific KPI
+      let kpiCompletedQuestions = 0;
+      kpi.questions.forEach(question => {
+        const response = responses.find(r => r.questionId === question.id);
+        if (response && response.value !== '' && response.value !== null) {
+          kpiCompletedQuestions++;
+          // console.log(`Found response for question ${question.id} in category ${categoryId}:`, response.value);
+        }
+      });
       
-      const kpiCompletedUploads = uploads.filter(u => 
-        kpi.uploads.some(up => up.id === u.uploadId && u.status === 'completed')
-      ).length;
+      // Count completed uploads for this specific KPI
+      let kpiCompletedUploads = 0;
+      kpi.uploads.forEach(upload => {
+        const uploadResponse = uploads.find(u => u.uploadId === upload.id);
+        if (uploadResponse && uploadResponse.status === 'completed') {
+          kpiCompletedUploads++;
+        }
+      });
 
       completedQuestions += kpiCompletedQuestions;
       completedUploads += kpiCompletedUploads;
@@ -198,9 +215,16 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
       }
     });
 
-    const overallProgress = totalQuestions + totalUploads > 0 
-      ? Math.round(((completedQuestions + completedUploads) / (totalQuestions + totalUploads)) * 100)
-      : 0;
+    const totalItems = totalQuestions + totalUploads;
+    if (totalItems === 0) return {
+      categoryId,
+      completedKpis,
+      totalKpis,
+      overallProgress: 0
+    };
+    
+    const progress = Math.round(((completedQuestions + completedUploads) / totalItems) * 100);
+    const overallProgress = Math.min(progress, 100); // Cap at 100%
 
     return {
       categoryId,
@@ -211,6 +235,8 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
   }, [responses, uploads]);
 
   const calculateOverallProgress = useCallback((): number => {
+    // console.log(`Calculating overall progress - responses: ${responses.length}, uploads: ${uploads.length}`);
+    
     let totalQuestions = 0;
     let completedQuestions = 0;
     let totalUploads = 0;
@@ -237,9 +263,12 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
       });
     });
 
-    return totalQuestions + totalUploads > 0 
-      ? Math.round(((completedQuestions + completedUploads) / (totalQuestions + totalUploads)) * 100)
-      : 0;
+    const totalItems = totalQuestions + totalUploads;
+    if (totalItems === 0) return 0;
+    
+    const progress = Math.round(((completedQuestions + completedUploads) / totalItems) * 100);
+    // console.log(`Overall progress calculation: ${completedQuestions + completedUploads}/${totalItems} = ${progress}%`);
+    return Math.min(progress, 100); // Cap at 100%
   }, [responses, uploads]);
 
   const getCategoryProgresses = useCallback((): CategoryProgress[] => {
@@ -279,7 +308,7 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
     calculateCategoryProgress,
     calculateOverallProgress,
     getCategoryProgresses,
-    autoSave,
+    saveProjectData,
     clearAllData,
     resetProjectData
   };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Lightbulb, Calendar, Ruler, ArrowRight } from 'lucide-react';
+import { Lightbulb, Calendar, Ruler, ArrowRight, Building2 } from 'lucide-react';
 
 interface ProjectData {
   name: string;
@@ -17,12 +17,14 @@ interface ProjectDetailsFormProps {
   data: ProjectData;
   onNext: (data: Partial<ProjectData>) => void;
   onCancel: () => void;
+  buildingType?: string;
 }
 
 const ProjectDetailsForm: React.FC<ProjectDetailsFormProps> = ({
   data,
   onNext,
   onCancel,
+  buildingType,
 }) => {
   const [formData, setFormData] = useState<ProjectData>({
     name: data.name || '',
@@ -76,6 +78,20 @@ const ProjectDetailsForm: React.FC<ProjectDetailsFormProps> = ({
       </div>
       
       <div className="project-details-form-content p-8">
+        {/* Building Type Information */}
+        {buildingType && (
+          <div className="project-details-form-building-type-info bg-gradient-to-r from-primary-emerald/10 to-primary-emerald/5 rounded-xl p-6 border border-primary-emerald/20 mb-8">
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="p-2 bg-primary-emerald/20 rounded-lg">
+                <Building2 className="h-6 w-6 text-primary-emerald" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-slate-900">Selected Building Type</h3>
+                <p className="text-slate-600">You are creating a {buildingType.charAt(0).toUpperCase() + buildingType.slice(1)} certification project</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="project-details-form-fields space-y-8">
           {/* Project Name */}

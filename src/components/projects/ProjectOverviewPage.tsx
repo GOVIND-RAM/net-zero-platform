@@ -12,9 +12,7 @@ import {
   Lightbulb, 
   Globe,
   Building2,
-  Calendar,
-  User,
-  Mail
+  User
 } from 'lucide-react';
 
 interface ProjectData {

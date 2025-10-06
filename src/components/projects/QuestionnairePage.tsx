@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Save, ArrowRight, ArrowLeft } from 'lucide-react';
 import { questionnaireData } from '../../data/questionnaireData';
 import { 
@@ -14,16 +14,16 @@ interface QuestionnairePageProps {
   onSaveAndNext?: () => void;
   onSave?: () => void;
   onPrevious?: () => void;
+  onNavigateToCategory?: (categoryId: string) => void;
 }
 
 const QuestionnairePage: React.FC<QuestionnairePageProps> = ({ 
   categoryId, 
   onSaveAndNext, 
   onSave, 
-  onPrevious 
+  onPrevious,
+  onNavigateToCategory
 }) => {
-  const [activeTab, setActiveTab] = useState<string>(categoryId || 'integrative-process');
-  
   // Use ProjectContext for state management
   const {
     responses,
@@ -35,15 +35,11 @@ const QuestionnairePage: React.FC<QuestionnairePageProps> = ({
     removeUpload,
     calculateOverallProgress,
     getCategoryProgresses,
-    autoSave
+    saveProjectData
   } = useProject();
 
-  // Update activeTab when categoryId changes
-  useEffect(() => {
-    if (categoryId) {
-      setActiveTab(categoryId);
-    }
-  }, [categoryId]);
+  // Always use the categoryId prop as the active tab
+  const activeTab = categoryId || 'integrative-process';
 
   const handleResponseChange = useCallback((response: QuestionResponse) => {
     addResponse(response);
@@ -66,20 +62,27 @@ const QuestionnairePage: React.FC<QuestionnairePageProps> = ({
     if (onSave) {
       onSave();
     } else {
-      await autoSave();
+      // Manual save only - no auto-save
+      await saveProjectData();
     }
-  }, [onSave, autoSave]);
+  }, [onSave, saveProjectData]);
 
   const handleSaveAndNext = useCallback(async () => {
+    // Save current data first
     await handleSave();
+    
+    // Navigate immediately after save
     if (onSaveAndNext) {
       onSaveAndNext();
     }
   }, [handleSave, onSaveAndNext]);
 
   const handleCategoryClick = useCallback((categoryId: string) => {
-    setActiveTab(categoryId);
-  }, []);
+    // Allow sidebar navigation - communicate with parent to switch tabs
+    if (onNavigateToCategory) {
+      onNavigateToCategory(categoryId);
+    }
+  }, [onNavigateToCategory]);
 
   // Get progress data from context
   const overallProgress = calculateOverallProgress();
@@ -190,16 +193,14 @@ const QuestionnairePage: React.FC<QuestionnairePageProps> = ({
                     <span>{isSaving ? 'Saving...' : 'Save'}</span>
                   </button>
                   
-                  {onSaveAndNext && (
-                    <button
-                      onClick={handleSaveAndNext}
-                      disabled={isSaving}
-                      className="certification-questionnaire-save-next-button flex items-center space-x-2 px-6 py-3 bg-primary-emerald text-white rounded-lg hover:bg-primary-emerald/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
-                    >
-                      <span>Save & Next</span>
-                      <ArrowRight className="certification-questionnaire-next-icon h-4 w-4" />
-                    </button>
-                  )}
+                  <button
+                    onClick={handleSaveAndNext}
+                    disabled={isSaving}
+                    className="certification-questionnaire-save-next-button flex items-center space-x-2 px-6 py-3 bg-primary-emerald text-white rounded-lg hover:bg-primary-emerald/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+                  >
+                    <span>Save & Next</span>
+                    <ArrowRight className="certification-questionnaire-next-icon h-4 w-4" />
+                  </button>
                 </div>
               </div>
             </div>

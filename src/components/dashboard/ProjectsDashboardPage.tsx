@@ -13,7 +13,7 @@ const ProjectsDashboardPage: React.FC = () => {
   const projects = getProjectsByType(certificationType || '');
 
   const handleCreateProject = () => {
-    navigate(`/project/create`);
+    navigate(`/project/create`, { state: { buildingType: certificationType } });
   };
 
   const handleViewProject = (project: Project) => {
