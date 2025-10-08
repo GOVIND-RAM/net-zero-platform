@@ -17,7 +17,7 @@ const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="google-signin-button w-full bg-white text-slate-900 px-6 py-3 rounded-full font-medium hover:bg-slate-100 transition-all duration-300 flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-300"
+      className="google-signin-button w-full bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-full font-medium hover:bg-white/30 transition-all duration-300 flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed border border-white/30"
       whileHover={{ scale: disabled ? 1 : 1.02 }}
       whileTap={{ scale: disabled ? 1 : 0.98 }}
     >

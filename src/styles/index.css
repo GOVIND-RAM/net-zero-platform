@@ -39,4 +39,38 @@
   .container-custom {
     @apply max-w-7xl mx-auto;
   }
+  
+  /* Emerald Nebula Performance Optimizations */
+  .nebula-container {
+    /* Optimize for mobile performance */
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+  
+  /* Glassmorphism form optimizations */
+  .auth-layout-form-card {
+    /* Optimize backdrop blur performance */
+    will-change: backdrop-filter, background-color;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+  
+  /* Smooth transitions for nebula interactions */
+  .nebula-glow-1,
+  .nebula-glow-2,
+  .nebula-glow-3 {
+    will-change: opacity, transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+}
+
+/* Reduce particle count on mobile */
+@media (max-width: 768px) {
+  .nebula-container {
+    /* Further optimize for mobile */
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+  }
 }

@@ -33,17 +33,17 @@ const ForgotPasswordPage: React.FC = () => {
 
   if (success) {
     return (
-      <AuthLayout title="Check Your Email" subtitle="We've sent you password reset instructions">
+      <AuthLayout>
         <div className="forgot-password-success-content text-center space-y-6">
           <div className="forgot-password-success-icon-container w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
             <Mail className="forgot-password-success-icon h-8 w-8 text-green-600" />
           </div>
           <div className="forgot-password-success-text space-y-2">
-            <h2 className="forgot-password-success-title text-2xl font-bold text-neutral-charcoal">Email Sent!</h2>
-            <p className="forgot-password-success-description text-gray-700">
-              We've sent password reset instructions to <strong>{email}</strong>
+            <h2 className="forgot-password-success-title text-2xl font-bold text-white drop-shadow-lg">Email Sent!</h2>
+            <p className="forgot-password-success-description text-white/90">
+              We've sent password reset instructions to <strong className="text-primary-emerald">{email}</strong>
             </p>
-            <p className="forgot-password-success-note text-gray-600 text-sm">
+            <p className="forgot-password-success-note text-white/70 text-sm">
               Didn't receive the email? Check your spam folder or try again.
             </p>
           </div>
@@ -59,20 +59,20 @@ const ForgotPasswordPage: React.FC = () => {
   }
 
   return (
-    <AuthLayout title="Forgot Password?" subtitle="Enter your email to reset your password">
-      <form onSubmit={handleSubmit} className="forgot-password-form space-y-6">
+    <AuthLayout>
+      <form onSubmit={handleSubmit} className="forgot-password-form space-y-6 px-1">
         <div className="forgot-password-form-content">
           <button
             type="button"
             onClick={() => navigate('/login')}
-            className="forgot-password-form-back-button flex items-center space-x-2 text-primary-emerald hover:text-primary-forest transition-colors mb-6"
+            className="forgot-password-form-back-button flex items-center space-x-2 text-primary-emerald hover:text-primary-emerald/80 transition-colors mb-6"
           >
             <ArrowLeft className="forgot-password-form-back-icon h-4 w-4" />
             <span className="forgot-password-form-back-text text-sm font-medium">Back to Login</span>
           </button>
 
-          <h2 className="forgot-password-form-title text-2xl font-bold text-neutral-charcoal mb-2">Reset Password</h2>
-          <p className="forgot-password-form-description text-gray-600 text-sm mb-6">
+          <h2 className="forgot-password-form-title text-2xl font-bold text-white drop-shadow-lg mb-2">Reset Password</h2>
+          <p className="forgot-password-form-description text-white/80 text-sm mb-6">
             Enter your email address and we'll send you instructions to reset your password.
           </p>
 
@@ -86,11 +86,11 @@ const ForgotPasswordPage: React.FC = () => {
             </motion.div>
           )}
 
-          <label htmlFor="email" className="forgot-password-form-label block text-neutral-charcoal text-sm font-medium mb-2">
+          <label htmlFor="email" className="forgot-password-form-label block text-white text-sm font-medium mb-2 drop-shadow-sm">
             Email Address
           </label>
           <div className="forgot-password-form-input-container relative">
-            <Mail className="forgot-password-form-input-icon absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Mail className="forgot-password-form-input-icon absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/60" />
             <input
               type="email"
               id="email"
@@ -100,7 +100,7 @@ const ForgotPasswordPage: React.FC = () => {
                 setError('');
               }}
               placeholder="Enter your email"
-              className="w-full bg-white border border-gray-300 text-neutral-charcoal rounded-lg pl-11 pr-4 py-3 focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none transition-all"
+              className="w-full bg-white/20 backdrop-blur-sm border border-white/30 text-white placeholder-white/60 rounded-lg pl-11 pr-4 py-3 focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 focus:bg-white/30 outline-none transition-all"
             />
           </div>
         </div>

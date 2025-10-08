@@ -4,10 +4,7 @@ import LoginForm from './LoginForm';
 
 const LoginPage: React.FC = () => {
   return (
-    <AuthLayout
-      title="Welcome Back"
-      subtitle="Continue your certification journey"
-    >
+    <AuthLayout>
       <LoginForm />
     </AuthLayout>
   );

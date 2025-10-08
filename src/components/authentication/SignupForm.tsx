@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Mail, Lock, Building, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { User, Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react';  
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -13,7 +13,11 @@ import {
 } from '../../utils/validation';
 import GoogleSignInButton from './GoogleSignInButton';
 
-const SignupForm: React.FC = () => {
+interface SignupFormProps {
+  onNebulaInteraction?: (isActive: boolean) => void;
+}
+
+const SignupForm: React.FC<SignupFormProps> = ({ onNebulaInteraction }) => {
   const navigate = useNavigate();
   const { signup, googleSignIn } = useAuth();
   
@@ -155,8 +159,8 @@ const SignupForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="signup-form space-y-5">
-      <h2 className="signup-form-title text-2xl font-bold text-neutral-charcoal mb-6">Create Account</h2>
+    <form onSubmit={handleSubmit} className="signup-form space-y-6 px-1">
+      <h2 className="signup-form-title text-2xl font-bold text-white drop-shadow-2xl mb-4">Create Account</h2>
 
       {/* Success Message */}
       {submitSuccess && (
@@ -182,19 +186,21 @@ const SignupForm: React.FC = () => {
 
       {/* Full Name */}
       <div className="signup-form-field-group">
-        <label htmlFor="name" className="signup-form-label block text-neutral-charcoal text-sm font-medium mb-2">
+        <label htmlFor="name" className="signup-form-label block text-white text-sm font-medium mb-2 drop-shadow-sm">
           Full Name
         </label>
         <div className="signup-form-input-container relative">
-          <User className="signup-form-input-icon absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <User className="signup-form-input-icon absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/60" />
           <input
             type="text"
             id="name"
             name="name"
             value={formData.name}
             onChange={handleChange}
+            onFocus={() => onNebulaInteraction?.(true)}
+            onBlur={() => onNebulaInteraction?.(false)}
             placeholder="Enter your full name"
-            className="signup-form-input w-full bg-white border border-gray-300 text-neutral-charcoal rounded-lg pl-11 pr-4 py-3 focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none transition-all"
+            className="signup-form-input w-full bg-white/20 backdrop-blur-sm border border-white/30 text-white placeholder-white/60 rounded-lg pl-11 pr-4 py-3 focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 focus:bg-white/30 outline-none transition-all"
           />
         </div>
         {errors.name && (
@@ -204,19 +210,21 @@ const SignupForm: React.FC = () => {
 
       {/* Email */}
       <div className="signup-form-field-group">
-        <label htmlFor="email" className="signup-form-label block text-neutral-charcoal text-sm font-medium mb-2">
+        <label htmlFor="email" className="signup-form-label block text-white text-sm font-medium mb-2 drop-shadow-sm">
           Email Address
         </label>
         <div className="signup-form-input-container relative">
-          <Mail className="signup-form-input-icon absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <Mail className="signup-form-input-icon absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/60" />
           <input
             type="email"
             id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
+            onFocus={() => onNebulaInteraction?.(true)}
+            onBlur={() => onNebulaInteraction?.(false)}
             placeholder="Enter your email"
-            className="signup-form-input w-full bg-white border border-gray-300 text-neutral-charcoal rounded-lg pl-11 pr-4 py-3 focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none transition-all"
+            className="signup-form-input w-full bg-white/20 backdrop-blur-sm border border-white/30 text-white placeholder-white/60 rounded-lg pl-11 pr-4 py-3 focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 focus:bg-white/30 outline-none transition-all"
           />
         </div>
         {errors.email && (
@@ -226,24 +234,26 @@ const SignupForm: React.FC = () => {
 
       {/* Password */}
       <div className="signup-form-field-group">
-        <label htmlFor="password" className="signup-form-label block text-neutral-charcoal text-sm font-medium mb-2">
+        <label htmlFor="password" className="signup-form-label block text-white text-sm font-medium mb-2 drop-shadow-sm">
           Password
         </label>
         <div className="signup-form-input-container relative">
-          <Lock className="signup-form-input-icon absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <Lock className="signup-form-input-icon absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/60" />
           <input
             type={showPassword ? 'text' : 'password'}
             id="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
+            onFocus={() => onNebulaInteraction?.(true)}
+            onBlur={() => onNebulaInteraction?.(false)}
             placeholder="Create a password"
-            className="signup-form-input w-full bg-white border border-gray-300 text-neutral-charcoal rounded-lg pl-11 pr-12 py-3 focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none transition-all"
+            className="signup-form-input w-full bg-white/20 backdrop-blur-sm border border-white/30 text-white placeholder-white/60 rounded-lg pl-11 pr-12 py-3 focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 focus:bg-white/30 outline-none transition-all"
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="signup-form-password-toggle absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="signup-form-password-toggle absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white/80"
           >
             {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
           </button>
@@ -286,24 +296,26 @@ const SignupForm: React.FC = () => {
 
       {/* Confirm Password */}
       <div>
-        <label htmlFor="confirmPassword" className="block text-neutral-charcoal text-sm font-medium mb-2">
+        <label htmlFor="confirmPassword" className="block text-white text-sm font-medium mb-2 drop-shadow-sm">
           Confirm Password
         </label>
         <div className="relative">
-          <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/60" />
           <input
             type={showConfirmPassword ? 'text' : 'password'}
             id="confirmPassword"
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}
+            onFocus={() => onNebulaInteraction?.(true)}
+            onBlur={() => onNebulaInteraction?.(false)}
             placeholder="Confirm your password"
-            className="signup-form-input w-full bg-white border border-gray-300 text-neutral-charcoal rounded-lg pl-11 pr-12 py-3 focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none transition-all"
+            className="signup-form-input w-full bg-white/20 backdrop-blur-sm border border-white/30 text-white placeholder-white/60 rounded-lg pl-11 pr-12 py-3 focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 focus:bg-white/30 outline-none transition-all"
           />
           <button
             type="button"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white/80"
           >
             {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
           </button>
@@ -313,42 +325,24 @@ const SignupForm: React.FC = () => {
         )}
       </div>
 
-      {/* Organization (Optional) */}
-      <div>
-        <label htmlFor="organization" className="block text-neutral-charcoal text-sm font-medium mb-2">
-          Organization Name <span className="text-gray-500">(Optional)</span>
-        </label>
-        <div className="relative">
-          <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-          <input
-            type="text"
-            id="organization"
-            name="organization"
-            value={formData.organization}
-            onChange={handleChange}
-            placeholder="Your organization name"
-            className="signup-form-input w-full bg-white border border-gray-300 text-neutral-charcoal rounded-lg pl-11 pr-4 py-3 focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none transition-all"
-          />
-        </div>
-      </div>
 
       {/* Terms Agreement */}
-      <div className="flex items-start space-x-3">
+      <div className="flex items-start space-x-3 pt-2">
         <input
           type="checkbox"
           id="agreeToTerms"
           name="agreeToTerms"
           checked={formData.agreeToTerms}
           onChange={handleChange}
-          className="signup-form-checkbox mt-1 h-4 w-4 rounded border-gray-300 text-primary-emerald focus:ring-2 focus:ring-primary-emerald/30"
+          className="signup-form-checkbox mt-1 h-4 w-4 rounded border-white/30 text-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 bg-white/10"
         />
-        <label htmlFor="agreeToTerms" className="text-sm text-neutral-charcoal">
+        <label htmlFor="agreeToTerms" className="text-sm text-white/90">
           I agree to the{' '}
-          <button type="button" className="text-primary-emerald hover:text-primary-forest transition-colors font-medium">
+          <button type="button" className="text-primary-emerald hover:text-primary-emerald/80 transition-colors font-medium">
             Terms of Service
           </button>{' '}
           and{' '}
-          <button type="button" className="text-primary-emerald hover:text-primary-forest transition-colors font-medium">
+          <button type="button" className="text-primary-emerald hover:text-primary-emerald/80 transition-colors font-medium">
             Privacy Policy
           </button>
         </label>
@@ -378,10 +372,10 @@ const SignupForm: React.FC = () => {
       {/* Divider */}
       <div className="relative my-6">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-300" />
+          <div className="w-full border-t border-white/20" />
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="px-4 bg-white text-gray-500">OR</span>
+          <span className="px-4 bg-transparent text-white/60">OR</span>
         </div>
       </div>
 
@@ -389,12 +383,12 @@ const SignupForm: React.FC = () => {
       <GoogleSignInButton text="Sign up with Google" onClick={handleGoogleSignIn} disabled={isSubmitting} />
 
       {/* Footer Link */}
-      <p className="signup-form-footer text-center text-gray-600 text-sm mt-6">
+      <p className="signup-form-footer text-center text-white/70 text-sm mt-6">
         Already have an account?{' '}
         <button
           type="button"
           onClick={() => navigate('/login')}
-          className="signup-form-login-link text-primary-emerald hover:text-primary-forest font-medium transition-colors"
+          className="signup-form-login-link text-primary-emerald hover:text-primary-emerald/80 font-medium transition-colors"
         >
           Log in
         </button>

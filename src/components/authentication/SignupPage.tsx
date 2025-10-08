@@ -4,10 +4,7 @@ import SignupForm from './SignupForm';
 
 const SignupPage: React.FC = () => {
   return (
-    <AuthLayout
-      title="Start Your Certification Journey"
-      subtitle="Join thousands of organizations achieving net zero"
-    >
+    <AuthLayout showBranding={true}>
       <SignupForm />
     </AuthLayout>
   );

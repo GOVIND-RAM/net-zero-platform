@@ -8,7 +8,11 @@ import GoogleSignInButton from './GoogleSignInButton';
 
 type LoginTab = 'customer' | 'admin';
 
-const LoginForm: React.FC = () => {
+interface LoginFormProps {
+  onNebulaInteraction?: (isActive: boolean) => void;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ onNebulaInteraction }) => {
   const navigate = useNavigate();
   const { login, googleSignIn } = useAuth();
   
@@ -120,16 +124,16 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 px-1">
       {/* Tabs */}
-      <div className="flex bg-gray-100 rounded-lg p-1">
+      <div className="flex bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-1 mb-6">
         <button
           type="button"
           onClick={() => handleTabChange('customer')}
-          className={`login-form-tab flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
+          className={`login-form-tab flex-1 py-3 px-4 rounded-md text-sm font-medium transition-all flex items-center justify-center ${
             activeTab === 'customer'
-              ? 'bg-white text-primary-emerald shadow-md'
-              : 'text-gray-600 hover:text-gray-900'
+              ? 'bg-white/15 text-white shadow-lg border border-white/20'
+              : 'text-white/80 hover:text-white hover:bg-white/8'
           }`}
         >
           Customer Login
@@ -137,10 +141,10 @@ const LoginForm: React.FC = () => {
         <button
           type="button"
           onClick={() => handleTabChange('admin')}
-          className={`login-form-tab flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
+          className={`login-form-tab flex-1 py-3 px-4 rounded-md text-sm font-medium transition-all flex items-center justify-center ${
             activeTab === 'admin'
-              ? 'bg-white text-primary-emerald shadow-md'
-              : 'text-gray-600 hover:text-gray-900'
+              ? 'bg-white/15 text-white shadow-lg border border-white/20'
+              : 'text-white/80 hover:text-white hover:bg-white/8'
           }`}
         >
           Admin Login
@@ -159,8 +163,8 @@ const LoginForm: React.FC = () => {
         </motion.div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <h2 className="text-2xl font-bold text-neutral-charcoal">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <h2 className="text-2xl font-bold text-white drop-shadow-2xl mb-2">
           {activeTab === 'customer' ? 'Welcome Back' : 'Admin Sign In'}
         </h2>
 
@@ -188,22 +192,24 @@ const LoginForm: React.FC = () => {
 
         {/* Admin Warning */}
         {activeTab === 'admin' && (
-          <motion.p
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-gray-600 text-sm text-center"
+            className="bg-red-500/20 border border-red-500/30 rounded-lg p-3 mb-4"
           >
-            Admin access only. Unauthorized access is prohibited.
-          </motion.p>
+            <p className="text-red-300 text-sm text-center font-medium drop-shadow-sm">
+              ⚠️ Admin access only. Unauthorized access is prohibited.
+            </p>
+          </motion.div>
         )}
 
         {/* Email */}
         <div>
-          <label htmlFor="email" className="block text-neutral-charcoal text-sm font-medium mb-2">
+          <label htmlFor="email" className="block text-white text-sm font-medium mb-2 drop-shadow-lg">
             Email Address
           </label>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/80" />
             <input
               type="email"
               id="email"
@@ -213,8 +219,10 @@ const LoginForm: React.FC = () => {
                 if (errors.email) setErrors(prev => ({ ...prev, email: '' }));
                 setSubmitError('');
               }}
+              onFocus={() => onNebulaInteraction?.(true)}
+              onBlur={() => onNebulaInteraction?.(false)}
               placeholder="Enter your email"
-              className="login-form-input w-full bg-white border border-gray-300 text-neutral-charcoal rounded-lg pl-11 pr-4 py-3 focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none transition-all"
+              className="login-form-input w-full bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/70 rounded-lg pl-11 pr-4 py-3 focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 focus:bg-white/15 outline-none transition-all"
             />
           </div>
           {errors.email && (
@@ -224,11 +232,11 @@ const LoginForm: React.FC = () => {
 
         {/* Password */}
         <div>
-          <label htmlFor="password" className="block text-neutral-charcoal text-sm font-medium mb-2">
+          <label htmlFor="password" className="block text-white text-sm font-medium mb-2 drop-shadow-lg">
             Password
           </label>
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/80" />
             <input
               type={showPassword ? 'text' : 'password'}
               id="password"
@@ -238,13 +246,15 @@ const LoginForm: React.FC = () => {
                 if (errors.password) setErrors(prev => ({ ...prev, password: '' }));
                 setSubmitError('');
               }}
+              onFocus={() => onNebulaInteraction?.(true)}
+              onBlur={() => onNebulaInteraction?.(false)}
               placeholder="Enter your password"
-              className="login-form-input w-full bg-white border border-gray-300 text-neutral-charcoal rounded-lg pl-11 pr-12 py-3 focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 outline-none transition-all"
+              className="login-form-input w-full bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/70 rounded-lg pl-11 pr-12 py-3 focus:border-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 focus:bg-white/15 outline-none transition-all"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/80 hover:text-white"
             >
               {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
             </button>
@@ -255,7 +265,7 @@ const LoginForm: React.FC = () => {
         </div>
 
         {/* Remember Me & Forgot Password */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between pt-2">
           {activeTab === 'customer' ? (
             <div className="flex items-center space-x-2">
               <input
@@ -263,9 +273,9 @@ const LoginForm: React.FC = () => {
                 id="rememberMe"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="login-form-checkbox h-4 w-4 rounded border-gray-300 text-primary-emerald focus:ring-2 focus:ring-primary-emerald/30"
+                className="login-form-checkbox h-4 w-4 rounded border-white/30 text-primary-emerald focus:ring-2 focus:ring-primary-emerald/30 bg-white/10"
               />
-              <label htmlFor="rememberMe" className="text-sm text-neutral-charcoal">
+              <label htmlFor="rememberMe" className="text-sm text-white">
                 Keep me logged in
               </label>
             </div>
@@ -277,7 +287,7 @@ const LoginForm: React.FC = () => {
             <button
               type="button"
               onClick={() => navigate('/forgot-password')}
-              className="text-sm text-primary-emerald hover:text-primary-forest transition-colors font-medium"
+              className="text-sm text-primary-emerald hover:text-primary-emerald/90 transition-colors font-medium drop-shadow-sm"
             >
               Forgot password?
             </button>
@@ -305,21 +315,21 @@ const LoginForm: React.FC = () => {
         {/* Divider */}
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-300" />
+            <div className="w-full border-t border-white/20" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-4 bg-white text-gray-500">OR</span>
+            <span className="px-4 bg-transparent text-white/60">OR</span>
           </div>
         </div>
 
         {/* Dummy Login Section - Customer */}
         {activeTab === 'customer' && (
-          <div className="dummy-login-section-wrapper bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
+          <div className="dummy-login-section-wrapper bg-primary-emerald/10 backdrop-blur-sm border border-primary-emerald/30 rounded-lg p-4">
             <div className="flex items-center justify-center space-x-2 mb-3">
               <div className="dummy-login-badge bg-primary-emerald text-white text-xs font-semibold px-2 py-1 rounded">
                 TEST MODE
               </div>
-              <p className="text-blue-700 text-sm font-medium">Quick Login for Testing</p>
+              <p className="text-white text-sm font-medium">Quick Login for Testing</p>
             </div>
             
             <motion.button
@@ -340,7 +350,7 @@ const LoginForm: React.FC = () => {
               )}
             </motion.button>
             
-            <p className="text-primary-emerald text-xs text-center mt-3">
+            <p className="text-primary-emerald text-xs text-center mt-3 drop-shadow-sm">
               No credentials needed - instant access for testing
             </p>
           </div>
@@ -348,12 +358,12 @@ const LoginForm: React.FC = () => {
 
         {/* Dummy Login Section - Admin */}
         {activeTab === 'admin' && (
-          <div className="dummy-login-section-wrapper bg-purple-50 border-2 border-purple-200 rounded-lg p-4">
+          <div className="dummy-login-section-wrapper bg-purple-500/10 backdrop-blur-sm border border-purple-500/30 rounded-lg p-4">
             <div className="flex items-center justify-center space-x-2 mb-3">
               <div className="dummy-login-badge bg-purple-500 text-white text-xs font-semibold px-2 py-1 rounded">
                 TEST MODE
               </div>
-              <p className="text-purple-700 text-sm font-medium">Quick Admin Access for Testing</p>
+              <p className="text-white text-sm font-medium">Quick Admin Access for Testing</p>
             </div>
             
             <motion.button
@@ -374,7 +384,7 @@ const LoginForm: React.FC = () => {
               )}
             </motion.button>
             
-            <p className="text-purple-600 text-xs text-center mt-3">
+            <p className="text-purple-300 text-xs text-center mt-3 drop-shadow-sm">
               No credentials needed - instant access for testing
             </p>
           </div>
@@ -386,22 +396,22 @@ const LoginForm: React.FC = () => {
             {/* Divider */}
             <div className="relative my-6">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
+                <div className="w-full border-t border-white/20" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-gray-500">OR</span>
+                <span className="px-4 bg-transparent text-white/60">OR</span>
               </div>
             </div>
 
             <GoogleSignInButton onClick={handleGoogleSignIn} disabled={isSubmitting} />
 
             {/* Footer Link */}
-            <p className="text-center text-gray-600 text-sm mt-6">
+            <p className="text-center text-white text-sm mt-6">
               Don't have an account?{' '}
               <button
                 type="button"
                 onClick={() => navigate('/signup')}
-                className="text-primary-emerald hover:text-primary-forest font-medium transition-colors"
+                className="text-primary-emerald hover:text-primary-emerald/90 font-medium transition-colors drop-shadow-sm"
               >
                 Sign up
               </button>
