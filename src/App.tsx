@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
 // Pages
 import LandingPage from './components/landing/LandingPage';
@@ -18,12 +18,24 @@ import BuildingTypeSelection from './components/projects/BuildingTypeSelection';
 
 // Components
 import ProtectedRoute from './components/common/ProtectedRoute';
+import ChatbotWidget from './components/chatbot/ChatbotWidget';
 
-function App() {
+// Gemini API key
+const geminiApiKey = process.env.REACT_APP_GEMINI_API_KEY || 'AIzaSyC3oVtB4xccY5sDsn5Pkon60s0lAMpPNxo';
+
+// Main App Content Component (needs to be inside AuthProvider to use useAuth)
+const AppContent: React.FC = () => {
+  const { authState } = useAuth();
+
+  // Clear chatbot history when user logs out
+  React.useEffect(() => {
+    if (!authState.isAuthenticated) {
+      localStorage.removeItem('infaira_chat_history');
+    }
+  }, [authState.isAuthenticated]);
+
   return (
-    <Router>
-      <AuthProvider>
-        <div className="App">
+    <div className="App">
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<LandingPage />} />
@@ -166,7 +178,18 @@ function App() {
               }
             />
           </Routes>
+
+          {/* Infaira AI Chatbot - Only visible to logged-in users */}
+          {authState.isAuthenticated && <ChatbotWidget apiKey={geminiApiKey} />}
         </div>
+  );
+};
+
+function App() {
+  return (
+    <Router>
+      <AuthProvider>
+        <AppContent />
       </AuthProvider>
     </Router>
   );
