@@ -20,8 +20,8 @@ import BuildingTypeSelection from './components/projects/BuildingTypeSelection';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import ChatbotWidget from './components/chatbot/ChatbotWidget';
 
-// Gemini API key
-const geminiApiKey = process.env.REACT_APP_GEMINI_API_KEY || 'AIzaSyC3oVtB4xccY5sDsn5Pkon60s0lAMpPNxo';
+// Gemini API key - MUST be set in .env file
+const geminiApiKey = process.env.REACT_APP_GEMINI_API_KEY;
 
 // Main App Content Component (needs to be inside AuthProvider to use useAuth)
 const AppContent: React.FC = () => {
